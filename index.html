@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Metric Calendar | Home</title>
+  <meta name="description" content="A practical 10-month calendar framework built around focused work, predictable rest, and balanced planning.">
+  <meta name="author" content="J. Fisher / MetricCalendar.org">
+  <meta property="og:title" content="Metric Calendar | Home">
+  <meta property="og:description" content="A practical 10-month calendar framework built around focused work, predictable rest, and balanced planning.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container navbar">
+    <a class="brand" href="index.html" aria-label="Metric Calendar home">
+      <img src="assets/logo-mark.svg" alt="" width="44" height="44">
+      <span>Metric Calendar</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html" aria-current='page'>Home</a>
+      <a href="converter.html" >Converter</a>
+      <a href="rationale.html" >Literature &amp; Rationale</a>
+      <a href="faq.html" >FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="kicker">A public-interest calendar framework</span>
+        <h1>A better rhythm for the year.</h1>
+        <p class="lead">Metric Calendar is a practical 10-month calendar framework built around focused work, predictable rest, and balanced planning.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="converter.html">Try the converter</a>
+          <a class="btn secondary" href="#model">See the model</a>
+        </div>
+      </div>
+      <aside class="today-card" aria-label="Today's Metric Calendar date">
+        <div class="label">Today in the Metric Calendar</div>
+        <div class="metric-date" data-today-metric>mYYYY-MM-DD</div>
+        <p class="note">Gregorian: <strong data-today-gregorian>gYYYY-MM-DD</strong></p>
+        <div class="today-meta">
+          <div class="meta-box"><strong data-today-status>Focus Day</strong><span>Day type</span></div>
+          <div class="meta-box"><strong data-today-month>mMonth --</strong><span>Month</span></div>
+          <div class="meta-box"><strong data-today-week>mWeek --</strong><span>Within month</span></div>
+          <div class="meta-box"><strong data-today-mday>mDay --</strong><span>Within mWeek</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container grid-3">
+      <article class="card">
+        <div class="number">10</div>
+        <h3>Numbered months</h3>
+        <p>The year is divided into 10 self-contained months, alternating between 36 and 37 days.</p>
+      </article>
+      <article class="card">
+        <div class="number">6</div>
+        <h3>Day mWeeks</h3>
+        <p>Each mWeek contains four Focus/Work Days followed by two Rest Days.</p>
+      </article>
+      <article class="card highlight">
+        <div class="number">5</div>
+        <h3>Bonus Rest Days</h3>
+        <p>Every even-numbered month has one additional Bonus Rest Day outside the mWeek cycle.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="model">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2>The model at a glance</h2>
+          <p>Metric Calendar keeps the civil year aligned with January 1 while redesigning the internal rhythm of months and mWeeks.</p>
+        </div>
+      </div>
+      <div class="model-visual">
+        <img src="assets/calendar-model.svg" alt="Diagram of the Metric Calendar annual model showing 10 months, 60 mWeeks, and Bonus Rest Days.">
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div>
+        <h2>How it works</h2>
+        <p class="copy-large">Each month begins with mDay 1 and contains six complete mWeeks. The 37th day of every even-numbered month is a Bonus Rest Day, outside the regular mWeek cycle.</p>
+        <div class="pill-row">
+          <span class="pill">g2026-01-01 = m2026-01-01</span>
+          <span class="pill">g2026-12-31 = m2026-10-37</span>
+          <span class="pill gold">Leap years end at mYYYY-10-38</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>The six-day mWeek</h3>
+        <div class="week-strip" aria-label="Six-day mWeek">
+          <div class="day-chip focus">1<small>Focus</small></div>
+          <div class="day-chip focus">2<small>Focus</small></div>
+          <div class="day-chip focus">3<small>Focus</small></div>
+          <div class="day-chip focus">4<small>Focus</small></div>
+          <div class="day-chip rest">5<small>Rest</small></div>
+          <div class="day-chip rest">6<small>Rest</small></div>
+        </div>
+        <p class="note">The technical term “Work Day” may be used in the specification. Public-facing copy uses “Focus Day” first.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="container grid-2">
+      <div>
+        <h2>Designed around productivity without burnout.</h2>
+        <p>Metric Calendar is not just a tidier date system. Its central proposition is that the year can be structured around focused effort, predictable recovery, and clearer planning cycles.</p>
+      </div>
+      <div class="card">
+        <h3>Standard year totals</h3>
+        <table class="spec-table">
+          <tbody>
+            <tr><td>Focus/Work Days</td><td><strong>240</strong></td></tr>
+            <tr><td>Regular Rest Days</td><td><strong>120</strong></td></tr>
+            <tr><td>Bonus Rest Days</td><td><strong>5</strong></td></tr>
+            <tr><td>Total</td><td><strong>365</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container callout">
+      <h2>Use the converter.</h2>
+      <p>Convert Gregorian dates to Metric dates, validate Metric dates, and see whether a date is a Focus Day, Rest Day, Bonus Rest Day, or Leap Day/New Year’s Eve.</p>
+      <a class="btn secondary" href="converter.html">Open converter</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <p><strong>Metric Calendar</strong></p>
+      <p>The Metric Calendar framework is shared for common public use with attribution to <strong>J. Fisher / MetricCalendar.org</strong>.</p>
+    </div>
+    <div>
+      <p><a href="index.html">Home</a> · <a href="converter.html">Converter</a> · <a href="rationale.html">Literature</a> · <a href="faq.html">FAQ</a></p>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
