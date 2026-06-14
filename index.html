@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <title>Metric Calendar | Home</title>
+  <meta name="description" content="A practical 10-month calendar framework built around focused work, predictable rest, and balanced planning.">
+  <meta property="og:title" content="Metric Calendar | Home">
+  <meta property="og:description" content="A practical 10-month calendar framework built around focused work, predictable rest, and balanced planning.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://metriccalendar.org/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="J. Fisher / MetricCalendar.org">
+  <meta name="theme-color" content="#0B1D3A">
+  <link rel="icon" href="assets/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="assets/favicons/apple-touch-icon.png">
+  <link rel="manifest" href="assets/favicons/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;650;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="index.html" aria-label="Metric Calendar home">
+      <img src="assets/logos/metric-calendar-logo-horizontal.png" alt="Metric Calendar" width="420" height="140">
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="converter.html" >Converter</a>
+      <a href="rationale.html" >Literature &amp; Rationale</a>
+      <a href="faq.html" >FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="kicker">A research-backed calendar reform movement</span>
+        <h1>A better rhythm for the year.</h1>
+        <p class="lead">Metric Calendar is a practical 10-month calendar framework built around focused work, predictable rest, and balanced planning.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="converter.html">Try the converter</a>
+          <a class="btn secondary" href="#model">Explore the model</a>
+        </div>
+      </div>
+      <aside class="today-card" aria-label="Today in the Metric Calendar">
+        <img class="mini-mark" src="assets/logos/metric-calendar-logo-icon.png" alt="">
+        <div class="eyebrow">Today in the Metric Calendar</div>
+        <div class="metric-date" data-today-metric>YYYY-MM-DD</div>
+        <p>Gregorian: <strong data-today-gregorian>gYYYY-MM-DD</strong></p>
+        <div class="today-meta">
+          <div class="meta-box"><strong data-today-status>Focus Day</strong><span>Day type</span></div>
+          <div class="meta-box"><strong data-today-month>Metric month --</strong><span>Metric month</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container grid-3">
+      <article class="card icon-card">
+        <img src="assets/logos/metric-calendar-logo-icon.png" alt="">
+        <div>
+          <div class="number">10</div>
+          <h3>Metric months</h3>
+          <p>The year is organized into 10 self-contained metric months, alternating between 36 and 37 days.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="number">6</div>
+        <h3>Day metric weeks</h3>
+        <p>Each metric week has four Focus/Work Days followed by two Rest Days.</p>
+      </article>
+      <article class="card highlight">
+        <div class="number">5</div>
+        <h3>Bonus Rest Days</h3>
+        <p>Every even-numbered metric month includes a 37th Day: Bonus Rest Day outside the metric week cycle.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="model">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2>The model</h2>
+          <p>A decimal year structure with a consistent work/rest rhythm, while retaining practical alignment with January 1.</p>
+        </div>
+      </div>
+      <div class="visual-card">
+        <table class="model-table" aria-label="Metric Calendar month structure">
+          <thead>
+            <tr><th>Metric month</th><th>Days</th><th>Structure</th><th>Final date example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>01</td><td>36</td><td>6 metric weeks</td><td>2026-01-36</td></tr>
+            <tr><td>02</td><td>37</td><td>6 metric weeks + 37th Day: Bonus Rest Day</td><td>2026-02-37</td></tr>
+            <tr><td>03</td><td>36</td><td>6 metric weeks</td><td>2026-03-36</td></tr>
+            <tr><td>04</td><td>37</td><td>6 metric weeks + 37th Day: Bonus Rest Day</td><td>2026-04-37</td></tr>
+            <tr><td>05</td><td>36</td><td>6 metric weeks</td><td>2026-05-36</td></tr>
+            <tr><td>06</td><td>37</td><td>6 metric weeks + 37th Day: Bonus Rest Day</td><td>2026-06-37</td></tr>
+            <tr><td>07</td><td>36</td><td>6 metric weeks</td><td>2026-07-36</td></tr>
+            <tr><td>08</td><td>37</td><td>6 metric weeks + 37th Day: Bonus Rest Day</td><td>2026-08-37</td></tr>
+            <tr><td>09</td><td>36</td><td>6 metric weeks</td><td>2026-09-36</td></tr>
+            <tr><td>10</td><td>37 / 38</td><td>Year-end Bonus Rest Day; leap years add Day 38</td><td>2026-10-37 / 2028-10-38</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pill-row">
+        <span class="pill">g2026-01-01 = 2026-01-01</span>
+        <span class="pill">g2026-12-31 = 2026-10-37</span>
+        <span class="pill gold">Leap years end at YYYY-10-38</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container grid-2">
+      <div>
+        <h2>The six-day metric week</h2>
+        <p class="copy-large">Each metric month begins with Day 1 and contains six complete metric weeks. The rhythm is intentionally simple: four Focus/Work Days, then two Rest Days.</p>
+      </div>
+      <div class="card">
+        <div class="week-strip" aria-label="Six-day metric week">
+          <div class="day-chip focus">1<small>Focus</small></div>
+          <div class="day-chip focus">2<small>Focus</small></div>
+          <div class="day-chip focus">3<small>Focus</small></div>
+          <div class="day-chip focus">4<small>Focus</small></div>
+          <div class="day-chip rest">5<small>Rest</small></div>
+          <div class="day-chip rest">6<small>Rest</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="container grid-2">
+      <div>
+        <h2>Designed around productivity without burnout.</h2>
+        <p>Metric Calendar is not just a tidier date system. Its central proposition is that the year can be structured around focused effort, predictable recovery, and clearer planning cycles.</p>
+        <p><a class="btn gold" href="rationale.html">Read the rationale</a></p>
+      </div>
+      <div class="totals-card">
+        <h3>Standard year totals</h3>
+        <div class="totals-list">
+          <div class="total-row"><span>Focus/Work Days</span><strong>240</strong></div>
+          <div class="total-row"><span>Regular Rest Days</span><strong>120</strong></div>
+          <div class="total-row"><span>Bonus Rest Days</span><strong>5</strong></div>
+          <div class="total-row"><span>Total</span><strong>365</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div class="card">
+        <h2>Use the converter.</h2>
+        <p>Convert Gregorian dates to Metric dates and Metric dates back to Gregorian dates using the official model.</p>
+        <p><a class="btn primary" href="converter.html">Open converter</a></p>
+      </div>
+      <div class="card">
+        <h2>Questions first.</h2>
+        <p>Learn how holidays, birthdays, salaries, hourly work, essential services, and leap years can be understood in the framework.</p>
+        <p><a class="btn secondary" href="faq.html">Read the FAQ</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <img class="footer-mark" src="assets/logos/metric-calendar-logo-icon.png" alt="" width="72" height="72">
+      <p><strong>Metric Calendar</strong></p>
+      <p>The Metric Calendar framework is shared for common public use with attribution to <strong>J. Fisher / MetricCalendar.org</strong>.</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="converter.html">Converter</a>
+      <a href="rationale.html">Literature &amp; Rationale</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
