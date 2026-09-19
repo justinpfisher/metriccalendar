@@ -57,6 +57,10 @@ Set `PORT` to choose a different port. The preview server binds only to localhos
   work correctly; arithmetic avoids the JavaScript Date 1900 offset entirely.
 - “Today” uses the device's local date; conversions are date-only and do not use
   timestamps or daylight-saving arithmetic.
+- The homepage month follows that local date, highlighting today in the regular
+  grid or on the Bonus Rest / Leap Day strip. It updates at midnight, on return to
+  the tab, and when a changed device date is detected. Without JavaScript, the
+  calendar is clearly labelled as an example instead of a current date.
 
 ## Verification
 

@@ -5,19 +5,55 @@
   const $ = selector => document.querySelector(selector);
   const $$ = selector => [...document.querySelectorAll(selector)];
   const pad = n => String(n).padStart(2, '0');
-  function todayData() {
-    const now = new Date();
+  function todayData(now = new Date()) {
     return C.convertGregorianToMetric(now.getFullYear(), now.getMonth() + 1, now.getDate());
   }
+  let todayTimer;
+  let displayedDate;
+  function renderTodayCalendar(today) {
+    const calendar = $('[data-today-calendar]');
+    if (!calendar) return;
+    const {year, month, day} = today.metric;
+    calendar.querySelector('.calendar-top .eyebrow').textContent = 'Your metric month';
+    calendar.querySelector('.calendar-top .small-label').textContent = `${pad(month)} / 10`;
+    calendar.querySelector('h2').textContent = `Metric month ${pad(month)}`;
+    calendar.querySelector('.calendar-heading p').textContent = `${year} · ${C.monthLengths(year)[month - 1]} days · 6 metric weeks`;
+    calendar.querySelector('caption').textContent = `Metric month ${pad(month)}, ${year}. Today is day ${day}.`;
+    calendar.querySelectorAll('td').forEach((cell, index) => {
+      const current = index + 1 === day;
+      cell.classList.toggle('is-today', current);
+      if (current) cell.setAttribute('aria-current', 'date');
+      else cell.removeAttribute('aria-current');
+    });
+    const extras = [];
+    for (let extra = 37; extra <= C.monthLengths(year)[month - 1]; extra++) {
+      const current = day === extra;
+      const label = C.classifyMetricDate(year, month, extra).status;
+      extras.push(`<div class="bonus-strip${current ? ' is-today' : ''}"${current ? ' aria-current="date"' : ''}><span class="bonus-number">${extra}</span><div><strong>${label}${current ? ' · Today' : ''}</strong><span>Outside the metric week</span></div><span class="sun-mark" aria-hidden="true">✳</span></div>`);
+    }
+    calendar.querySelector('[data-today-extras]').innerHTML = extras.join('');
+    calendar.querySelector('figcaption').innerHTML = `<strong>Today: ${C.formatMetric(today.metric)} · ${today.status}</strong><span>Gregorian: ${C.formatGregorian(today.gregorian)} · Your local date</span>`;
+  }
   function refreshToday() {
-    const today = todayData();
-    $$('[data-today-metric]').forEach(el => el.textContent = C.formatMetric(today.metric));
-    $$('[data-today-gregorian]').forEach(el => el.textContent = C.formatGregorian(today.gregorian));
-    $$('[data-today-status]').forEach(el => el.textContent = today.status);
+    clearTimeout(todayTimer);
+    const now = new Date();
+    const today = todayData(now);
+    const date = C.formatGregorian(today.gregorian);
+    // Keep an open tab current without rebuilding or announcing an unchanged day.
+    if (date !== displayedDate) {
+      $$('[data-today-metric]').forEach(el => el.textContent = C.formatMetric(today.metric));
+      $$('[data-today-gregorian]').forEach(el => el.textContent = date);
+      $$('[data-today-status]').forEach(el => el.textContent = today.status);
+      renderTodayCalendar(today);
+      displayedDate = date;
+    }
+    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    todayTimer = setTimeout(refreshToday, Math.min(midnight - now + 50, 60000));
   }
   refreshToday();
-  setInterval(refreshToday, 60000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshToday(); });
+  window.addEventListener('pageshow', refreshToday);
+  window.addEventListener('focus', refreshToday);
   const menu = $('.menu-toggle');
   menu.hidden = false;
   document.documentElement.classList.add('js');

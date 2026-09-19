@@ -97,6 +97,8 @@ const axePath = process.env.QA_AXE_PATH || require.resolve('axe-core/axe.min.js'
   await staticPage.goto(base+'/');
   assert.equal(await staticPage.locator('#main-nav').isVisible(),true);
   assert.equal(await staticPage.locator('.mini-calendar td').count(),36);
+  assert.equal(await staticPage.locator('.hero-calendar [aria-current="date"]').count(),0);
+  assert.match(await staticPage.locator('.calendar-top .eyebrow').textContent(),/Example/);
   await staticPage.goto(base+'/converter.html');
   assert.match(await staticPage.locator('noscript').textContent(),/needs JavaScript/);
   await noJS.close();
@@ -106,7 +108,46 @@ const axePath = process.env.QA_AXE_PATH || require.resolve('axe-core/axe.min.js'
   await localPage.goto(base+'/');
   assert.equal(await localPage.locator('[data-today-gregorian]').textContent(),'g2027-12-31');
   assert.equal(await localPage.locator('[data-today-metric]').textContent(),'2027-10-37');
+  assert.equal(await localPage.locator('.hero-calendar [aria-current="date"]').count(),1);
+  assert.match(await localPage.locator('.hero-calendar [aria-current="date"]').textContent(),/37.*Today/);
+  // Exercise changing day types and month lengths in an already-open homepage.
+  const dates = [
+    ['2026-01-05','2026-01-05','Rest Day 1',0],
+    ['2026-02-05','2026-01-36','Rest Day 2',0],
+    ['2026-02-06','2026-02-01','Focus Day 1',1],
+    ['2026-03-14','2026-02-37','Bonus Rest Day',1],
+    ['2026-09-19','2026-08-07','Focus Day 1',1],
+    ['2026-12-31','2026-10-37','Bonus Rest Day / New Year’s Eve',1],
+    ['2028-12-30','2028-10-37','Bonus Rest Day',2],
+    ['2028-12-31','2028-10-38','Leap Day / New Year’s Eve',2]
+  ];
+  for (const [date,metric,status,extras] of dates) {
+    await localPage.clock.setSystemTime(new Date(date+'T20:00:00Z'));
+    await localPage.evaluate(()=>window.dispatchEvent(new Event('focus')));
+    assert.equal(await localPage.locator('.hero-calendar [aria-current="date"]').count(),1);
+    assert.equal(await localPage.locator('.hero-calendar [aria-current="date"]').evaluate(el=>el.tagName==='TD'?el.textContent:el.querySelector('.bonus-number').textContent),metric.slice(-2));
+    assert.equal(await localPage.locator('.calendar-heading h2').textContent(),'Metric month '+metric.slice(5,7));
+    assert.equal(await localPage.locator('.calendar-top .small-label').textContent(),metric.slice(5,7)+' / 10');
+    assert.equal(await localPage.locator('.hero-calendar .bonus-strip').count(),extras);
+    assert.equal(await localPage.locator('#calendar-caption strong').textContent(),`Today: ${metric} · ${status}`);
+  }
+  // A visible tab updates across midnight without a reload or focus event.
+  for (const [before,after] of [['2028-01-01T07:59:59.500Z','2028-01-01'],['2029-01-01T07:59:59.500Z','2029-01-01']]) {
+    await localPage.clock.setSystemTime(new Date(before));
+    await localPage.reload();
+    await localPage.clock.runFor(1000);
+    assert.equal(await localPage.locator('[data-today-metric]').textContent(),after);
+    assert.equal(await localPage.locator('.hero-calendar [aria-current="date"]').textContent(),'01');
+    assert.equal(await localPage.locator('.hero-calendar .bonus-strip').count(),0);
+  }
   await local.close();
+  const east=await browser.newContext({timezoneId:'Asia/Tokyo'});
+  const eastPage=await east.newPage();
+  await eastPage.clock.install({time:new Date('2028-01-01T03:00:00Z')});
+  await eastPage.goto(base+'/');
+  assert.equal(await eastPage.locator('[data-today-metric]').textContent(),'2028-01-01');
+  assert.equal(await eastPage.locator('.hero-calendar [aria-current="date"]').textContent(),'01');
+  await east.close();
   await fs.writeFile(path.join(out,'browser-report.json'),JSON.stringify({base,pages:9,widths:[1440,768,390,320],errors,layout,violations},null,2));
   await browser.close();
   console.log(JSON.stringify({pages:9,widths:4,errors,layout,violations},null,2));

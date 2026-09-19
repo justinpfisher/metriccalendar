@@ -48,10 +48,10 @@ function render(p, body) {
   <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png">
   <link rel="manifest" href="/assets/favicons/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=2">
+  <link rel="stylesheet" href="/styles.css?v=3">
   <script type="application/ld+json">${JSON.stringify(data).replaceAll('<','\\u003c')}</script>
   <script defer src="/calendar.js?v=2"></script>
-  <script defer src="/script.js?v=2"></script>
+  <script defer src="/script.js?v=3"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
