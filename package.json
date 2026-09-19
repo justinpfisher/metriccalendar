@@ -1,0 +1,12 @@
+{
+  "name": "metriccalendar",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Static reference site and date converter for the Metric Calendar proposal",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/calendar.test.cjs && node scripts/check.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "engines": { "node": ">=22" }
+}

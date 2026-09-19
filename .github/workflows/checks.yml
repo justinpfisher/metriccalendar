@@ -1,0 +1,23 @@
+name: Site checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Calendar calculations
+        run: node --test tests/calendar.test.cjs
+      - name: Rebuild static pages
+        run: node scripts/build.mjs
+      - name: Check links, metadata, sitemap, and hosting files
+        run: node scripts/check.mjs
+      - name: Ensure generated pages are committed
+        run: git diff --exit-code

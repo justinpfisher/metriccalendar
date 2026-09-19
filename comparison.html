@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Metric vs Gregorian calendar: structure and trade-offs | Metric Calendar</title>
+  <meta name="description" content="Compare Metric and Gregorian months, weeks, leap years, working-day patterns, and compatibility. See what changes and what stays the same.">
+  <meta name="author" content="J. Fisher / MetricCalendar.org">
+  <meta name="theme-color" content="#0B1D3A">
+  <link rel="canonical" href="https://metriccalendar.org/comparison.html">
+  <meta property="og:title" content="Metric vs Gregorian calendar: structure and trade-offs | Metric Calendar">
+  <meta property="og:description" content="Compare Metric and Gregorian months, weeks, leap years, working-day patterns, and compatibility. See what changes and what stays the same.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://metriccalendar.org/comparison.html">
+  <meta property="og:site_name" content="Metric Calendar">
+  <meta property="og:locale" content="en_CA">
+  <meta property="og:image" content="https://metriccalendar.org/assets/social-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Metric Calendar: 10 months, 6-day metric weeks, 5 Bonus Rest Days. A calendar proposal.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/favicons/site.webmanifest">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles.css?v=2">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://metriccalendar.org/#website","url":"https://metriccalendar.org/","name":"Metric Calendar","inLanguage":"en-CA"},{"@type":"WebPage","@id":"https://metriccalendar.org/comparison.html#webpage","url":"https://metriccalendar.org/comparison.html","name":"Metric vs Gregorian calendar: structure and trade-offs | Metric Calendar","description":"Compare Metric and Gregorian months, weeks, leap years, working-day patterns, and compatibility. See what changes and what stays the same.","inLanguage":"en-CA","isPartOf":{"@id":"https://metriccalendar.org/#website"},"author":{"@type":"Person","name":"J. Fisher"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://metriccalendar.org/"},{"@type":"ListItem","position":2,"name":"Comparison","item":"https://metriccalendar.org/comparison.html"}]}]}</script>
+  <script defer src="/calendar.js?v=2"></script>
+  <script defer src="/script.js?v=2"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/" aria-label="Metric Calendar home"><img src="/assets/logos/metric-calendar-logo-horizontal.png" alt="Metric Calendar" width="420" height="140"></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" hidden>Menu <span aria-hidden="true">☰</span></button>
+    <nav id="main-nav" class="nav-links" aria-label="Main navigation"><a href="/calendar.html">The calendar</a>
+<a href="/converter.html">Converter</a>
+<a href="/comparison.html" aria-current="page">Comparison</a>
+<a href="/rationale.html">Research</a>
+<a href="/adoption.html">Adoption</a>
+<a href="/faq.html">FAQ</a></nav>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+<div class="page-intro container"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Comparison</span></nav><p class="eyebrow">Put the proposal in context</p><h1>What changes. What stays.</h1><p class="lead">A calendar is a shared agreement. A different structure brings both possibilities and coordination costs.</p></div>
+<div class="container reading-layout"><aside class="contents"><nav aria-label="On this page"><p class="eyebrow">On this page</p><a href="#comparison">Side by side</a><a href="#work-pattern">Work and rest</a><a href="#alignment">Date alignment</a><a href="#trade-offs">Practical trade-offs</a></nav><a class="contents-cta" href="/converter.html">Try a date <span aria-hidden="true">↗</span></a></aside><div class="article-body"><section id="comparison"><h2>Metric and Gregorian, side by side</h2><p>Metric Calendar retains the Gregorian year boundary and leap-year rule, while changing the divisions inside the year. Gregorian calendar context is documented by the <a href="https://aa.usno.navy.mil/faq/calendars">U.S. Naval Observatory</a>; Metric details come from the <a href="/calendar.html">project specification</a>.</p><div class="table-wrap"><table><caption>Structural comparison</caption><thead><tr><th scope="col">Feature</th><th scope="col">Gregorian</th><th scope="col">Metric proposal</th></tr></thead><tbody><tr><th scope="row">Days per year</th><td>365 or 366</td><td>365 or 366</td></tr><tr><th scope="row">Year begins</th><td>January 1</td><td>Same day as Gregorian January 1</td></tr><tr><th scope="row">Months</th><td>12; 28–31 days</td><td>10; 36–37 days, or 38 in leap-year month 10</td></tr><tr><th scope="row">Week</th><td>7 continuous days</td><td>6 days; extra days sit outside metric weeks</td></tr><tr><th scope="row">Month layout</th><td>Weekday of month start varies</td><td>Always starts with Focus Day 1</td></tr><tr><th scope="row">Extra days</th><td>February 29 in leap years</td><td>Five Bonus Rest Days; Leap Day at year-end</td></tr><tr><th scope="row">Leap rule</th><td>Divisible by 4; centuries only if divisible by 400</td><td>Same rule</td></tr><tr><th scope="row">Work schedule</th><td>Not defined by the calendar</td><td>Proposed 4 Focus + 2 Rest rhythm; actual schedules need agreement</td></tr><tr><th scope="row">Current role</th><td>Widely used civil calendar</td><td>A proposed framework and planning overlay</td></tr></tbody></table></div></section>
+<section id="work-pattern"><h2>Four days out of six is its own pattern</h2><p>A four-day working week within a seven-day calendar and the Metric Calendar’s four Focus Days in a six-day cycle are different arrangements. Their day counts, spacing of rest, and relationship to existing weekends differ.</p><div class="note"><strong>Compare equal spans of time.</strong><p>Before holidays and leave, a Monday–Friday pattern has 260–262 weekdays in a Gregorian year, depending on the year. The Metric structure has exactly 240 Focus Days. That is 20–22 fewer designated days, about 7.7–8.4% fewer than that particular baseline. These are calendar counts, not measured reductions in hours or forecasts of output.</p></div><p>At eight hours per Focus Day, the Metric pattern would imply <code>240 × 8 = 1,920</code> annual hours before leave or holidays. This is an illustration, not a required working-day length or a promise about pay. A person’s actual schedule could differ substantially.</p><p>In the regular six-day cycle, Focus Days occupy <code>4/6</code> of days. Across a common year, including Bonus Rest Days, the share is <code>240/365 ≈ 65.8%</code>. Neither calculation establishes a health or productivity benefit. <a href="/rationale.html#limitations">Read why shorter-workweek studies cannot directly validate this pattern.</a></p></section>
+<section id="alignment"><h2>Year alignment is preserved; month alignment changes</h2><p>The proposal adds no change to the Gregorian year’s seasonal alignment: each Metric year covers exactly the same days as its Gregorian counterpart. The month labels divide those days differently.</p><p>Metric month boundaries use fixed ordinal positions. For example, month 03 begins on day 74: Gregorian March 15 in 2026, but March 14 in leap year 2028. A Gregorian date after February generally maps to a different Metric month/day in a leap year than in a common year.</p><p>Metric weeks restart within each month. Their Rest Days move relative to Gregorian weekdays, and Bonus Rest Days interrupt the regular six-day pattern. A recurring “every metric week” event therefore needs explicit month-aware scheduling; repeating an event every six elapsed days would eventually place it on the wrong metric weekday.</p></section>
+<section id="trade-offs"><h2>The practical trade-offs</h2><div class="comparison-pair"><article><p class="eyebrow">What the structure offers</p><h3>Predictable internal layouts</h3><p>Each metric month has the same six regular weeks. The five two-month blocks each span 73 days in a common year. Regular Focus and Rest counts can be read directly from the specification.</p></article><article><p class="eyebrow">What still takes work</p><h3>Coordination with everyone else</h3><p>Schools, religious observances, partners, reporting periods, and software often follow existing dates and weekdays. Ten months also cannot be divided into four equal groups of whole months for quarterly planning.</p></article></div><p>Predictable layouts are a property of the design. Less planning effort, lower burnout, or better performance are hypotheses. Any trial should measure both the potential gains and the burden of maintaining two systems.</p><div class="next-step"><span>Explore a gradual, reversible approach.</span><a href="/adoption.html">Practical adoption guidance →</a></div></section>
+</div></div>
+</main>
+<footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-about"><img src="/assets/logos/metric-calendar-logo-icon.png" alt="" width="56" height="56"><p class="footer-title">A different rhythm.<br>The same shared year.</p><p>A calendar proposal by<br>J. Fisher / MetricCalendar.org.</p></div><nav aria-label="Footer navigation"><a href="/">Home</a>
+<a href="/calendar.html">The calendar</a>
+<a href="/converter.html">Converter</a>
+<a href="/comparison.html" aria-current="page">Comparison</a>
+<a href="/rationale.html">Research</a>
+<a href="/adoption.html">Adoption</a>
+<a href="/faq.html">FAQ</a>
+<a href="/about.html">About</a></nav><div class="footer-note"><p class="eyebrow">Explore with an open mind</p><p>The rules are defined. The wider benefits are questions to test.</p><a href="/rationale.html#limitations">Read the limitations <span aria-hidden="true">↗</span></a></div></div><div class="footer-bottom"><span>Shared for common public use with attribution.</span><a href="https://github.com/justinpfisher/metriccalendar">Source on GitHub <span aria-hidden="true">↗</span></a></div></div></footer>
+</body>
+</html>

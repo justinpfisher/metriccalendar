@@ -1,50 +1,3 @@
-<!doctype html>
-<html lang="en-CA">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gregorian ↔ Metric date converter and method | Metric Calendar</title>
-  <meta name="description" content="Convert Gregorian and Metric Calendar dates in either direction. See day type, day of year, leap-year handling, and the calculation behind each result.">
-  <meta name="author" content="J. Fisher / MetricCalendar.org">
-  <meta name="theme-color" content="#0B1D3A">
-  <link rel="canonical" href="https://metriccalendar.org/converter.html">
-  <meta property="og:title" content="Gregorian ↔ Metric date converter and method | Metric Calendar">
-  <meta property="og:description" content="Convert Gregorian and Metric Calendar dates in either direction. See day type, day of year, leap-year handling, and the calculation behind each result.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://metriccalendar.org/converter.html">
-  <meta property="og:site_name" content="Metric Calendar">
-  <meta property="og:locale" content="en_CA">
-  <meta property="og:image" content="https://metriccalendar.org/assets/social-card.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Metric Calendar: 10 months, 6-day metric weeks, 5 Bonus Rest Days. A calendar proposal.">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="/assets/favicons/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
-  <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png">
-  <link rel="manifest" href="/assets/favicons/site.webmanifest">
-  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=2">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://metriccalendar.org/#website","url":"https://metriccalendar.org/","name":"Metric Calendar","inLanguage":"en-CA"},{"@type":"WebPage","@id":"https://metriccalendar.org/converter.html#webpage","url":"https://metriccalendar.org/converter.html","name":"Gregorian ↔ Metric date converter and method | Metric Calendar","description":"Convert Gregorian and Metric Calendar dates in either direction. See day type, day of year, leap-year handling, and the calculation behind each result.","inLanguage":"en-CA","isPartOf":{"@id":"https://metriccalendar.org/#website"},"author":{"@type":"Person","name":"J. Fisher"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://metriccalendar.org/"},{"@type":"ListItem","position":2,"name":"Converter","item":"https://metriccalendar.org/converter.html"}]}]}</script>
-  <script defer src="/calendar.js?v=2"></script>
-  <script defer src="/script.js?v=2"></script>
-</head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header">
-  <div class="container nav-shell">
-    <a class="brand" href="/" aria-label="Metric Calendar home"><img src="/assets/logos/metric-calendar-logo-horizontal.png" alt="Metric Calendar" width="420" height="140"></a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" hidden>Menu <span aria-hidden="true">☰</span></button>
-    <nav id="main-nav" class="nav-links" aria-label="Main navigation"><a href="/calendar.html">The calendar</a>
-<a href="/converter.html" aria-current="page">Converter</a>
-<a href="/comparison.html">Comparison</a>
-<a href="/rationale.html">Research</a>
-<a href="/adoption.html">Adoption</a>
-<a href="/faq.html">FAQ</a></nav>
-  </div>
-</header>
-<main id="main" tabindex="-1">
-<div class="page-intro container"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Converter</span></nav><p class="eyebrow">Try it for yourself</p><h1>Same day. A different date.</h1><p class="lead">Convert a birthday, a deadline, or today. Both dates identify the same day within the same year.</p></div>
 <div class="container converter-section">
 <noscript><div class="note"><strong>The interactive converter needs JavaScript.</strong> You can still use the <a href="#method">conversion method</a>, <a href="#examples">worked examples</a>, and <a href="/calendar.html#months">month table</a> below.</div></noscript>
 <section class="converter" aria-labelledby="converter-heading">
@@ -63,15 +16,3 @@
 </div>
 <section class="section container method-section" id="method"><div class="section-heading"><div><p class="eyebrow">A transparent calculation</p><h2>Count the day.<br>Keep the year.</h2></div><p>Both calendars begin the year together and have the same number of days. Conversion changes the month and day label, preserving the ordinal day (its position in the year).</p></div><ol class="method-steps"><li><span>01</span><h3>Find the day of year</h3><p>Add the lengths of the completed months to the day of the month in the input calendar. January 1 is day 1.</p></li><li><span>02</span><h3>Use the other month lengths</h3><p>Subtract complete months in the destination calendar until the remaining count fits inside a month.</p></li><li><span>03</span><h3>Read the new date</h3><p>The remainder is the day of that month. The year stays the same. For Metric dates, classify the day using the six-day pattern or extra-day rules.</p></li></ol><p>Metric month lengths are <code>36, 37, 36, 37, 36, 37, 36, 37, 36, 37</code>; the final value becomes 38 in a leap year. See the <a href="/calendar.html#months">full month table</a> and <a href="/calendar.html#extra-days">leap-year rule</a>.</p></section>
 <section class="section examples-section" id="examples"><div class="container"><p class="eyebrow">Worked examples</p><h2>Follow a date through.</h2><div class="example-grid"><article><span class="small-label">An ordinary date</span><h3>July 1, 2026</h3><p>Gregorian day of year:<br><code>31 + 28 + 31 + 30 + 31 + 30 + 1 = 182</code>.</p><p>The first four metric months total <code>36 + 37 + 36 + 37 = 146</code> days. The remainder is <code>182 − 146 = 36</code>.</p><p class="example-answer">g2026-07-01 = 2026-05-36</p><p>Metric week 6, Rest Day 2.</p><a href="/converter.html?date=2026-07-01&amp;from=gregorian">Load this example →</a></article><article><span class="small-label">A Bonus Rest Day</span><h3>March 14, 2026</h3><p>Gregorian day of year:<br><code>31 + 28 + 14 = 73</code>.</p><p>Subtract the first metric month: <code>73 − 36 = 37</code>. Day 37 of month 02 is outside the metric week.</p><p class="example-answer">g2026-03-14 = 2026-02-37</p><p>The first Bonus Rest Day of the year.</p><a href="/converter.html?date=2026-03-14&amp;from=gregorian">Load this example →</a></article></div><div class="table-wrap"><table><caption>Boundary cases you can check in the converter</caption><thead><tr><th scope="col">Gregorian</th><th scope="col">Metric</th><th scope="col">Why it matters</th></tr></thead><tbody><tr><td>g2026-01-01</td><td>2026-01-01</td><td>Shared start of year</td></tr><tr><td>g2026-02-05</td><td>2026-01-36</td><td>Last day of metric month 01</td></tr><tr><td>g2026-02-06</td><td>2026-02-01</td><td>Next metric month begins</td></tr><tr><td>g2028-02-29</td><td>2028-02-24</td><td>Gregorian leap day is a regular metric day</td></tr><tr><td>g2026-12-31</td><td>2026-10-37</td><td>Common-year Bonus Rest Day / New Year’s Eve</td></tr><tr><td>g2028-12-30</td><td>2028-10-37</td><td>Bonus Rest Day in a leap year</td></tr><tr><td>g2028-12-31</td><td>2028-10-38</td><td>Leap Day / New Year’s Eve</td></tr><tr><td>g2100-12-31</td><td>2100-10-37</td><td>2100 is not a leap year</td></tr></tbody></table></div><p><strong>Invalid examples:</strong> Metric <code>2026-01-37</code> (month 01 has only 36 days), <code>2026-10-38</code> (not a leap year), and Gregorian <code>g2100-02-29</code> are rejected.</p><div class="note"><strong>A note on old dates and recurring events</strong><p>The converter uses Gregorian rules throughout years 1–9999, not historical local calendars. “Today” uses your device’s local date. For a recurring Gregorian birthday or holiday, convert each occurrence in its own year: after February, leap years can change the Metric month/day. <a href="/adoption.html#personal">Read the practical guidance.</a></p></div></div></section>
-
-</main>
-<footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-about"><img src="/assets/logos/metric-calendar-logo-icon.png" alt="" width="56" height="56"><p class="footer-title">A different rhythm.<br>The same shared year.</p><p>A calendar proposal by<br>J. Fisher / MetricCalendar.org.</p></div><nav aria-label="Footer navigation"><a href="/">Home</a>
-<a href="/calendar.html">The calendar</a>
-<a href="/converter.html" aria-current="page">Converter</a>
-<a href="/comparison.html">Comparison</a>
-<a href="/rationale.html">Research</a>
-<a href="/adoption.html">Adoption</a>
-<a href="/faq.html">FAQ</a>
-<a href="/about.html">About</a></nav><div class="footer-note"><p class="eyebrow">Explore with an open mind</p><p>The rules are defined. The wider benefits are questions to test.</p><a href="/rationale.html#limitations">Read the limitations <span aria-hidden="true">↗</span></a></div></div><div class="footer-bottom"><span>Shared for common public use with attribution.</span><a href="https://github.com/justinpfisher/metriccalendar">Source on GitHub <span aria-hidden="true">↗</span></a></div></div></footer>
-</body>
-</html>

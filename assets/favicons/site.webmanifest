@@ -1,6 +1,9 @@
 {
   "name": "Metric Calendar",
   "short_name": "Metric Calendar",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "en-CA",
   "icons": [
     {
       "src": "android-chrome-192x192.png",

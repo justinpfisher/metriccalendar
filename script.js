@@ -1,228 +1,164 @@
-// Metric Calendar converter
-// Attribution: J. Fisher / MetricCalendar.org
-
-(function(){
-  "use strict";
-
-  const MS_PER_DAY = 24 * 60 * 60 * 1000;
-
-  function pad2(n){ return String(n).padStart(2, "0"); }
-
-  function isLeapYear(year){
-    return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
-  }
-
-  function monthLengths(year){
-    return [36,37,36,37,36,37,36,37,36,isLeapYear(year) ? 38 : 37];
-  }
-
-  function validateGregorianDate(year, month, day){
-    const date = new Date(Date.UTC(year, month - 1, day));
-    return date.getUTCFullYear() === year &&
-           date.getUTCMonth() + 1 === month &&
-           date.getUTCDate() === day;
-  }
-
-  function dayOfYearFromGregorian(year, month, day){
-    if(!validateGregorianDate(year, month, day)){
-      throw new Error("Choose a valid Gregorian date.");
-    }
-    const start = Date.UTC(year, 0, 1);
-    const current = Date.UTC(year, month - 1, day);
-    return Math.floor((current - start) / MS_PER_DAY) + 1;
-  }
-
-  function gregorianFrometric_dayOfYear(year, dayOfYear){
-    const date = new Date(Date.UTC(year, 0, dayOfYear));
-    return {
-      year: date.getUTCFullYear(),
-      month: date.getUTCMonth() + 1,
-      day: date.getUTCDate()
-    };
-  }
-
-  function metricFrometric_dayOfYear(year, dayOfYear){
-    const lengths = monthLengths(year);
-    let remaining = dayOfYear;
-    for(let i = 0; i < lengths.length; i++){
-      if(remaining <= lengths[i]){
-        return { year, month: i + 1, day: remaining };
-      }
-      remaining -= lengths[i];
-    }
-    throw new Error("Day is outside the Metric Calendar year.");
-  }
-
-  function dayOfYearFromMetric(year, month, day){
-    if(!Number.isInteger(year) || year < 1) throw new Error("Enter a valid Metric year.");
-    if(!Number.isInteger(month) || month < 1 || month > 10) throw new Error("Metric month must be 01 through 10.");
-
-    const lengths = monthLengths(year);
-    const max = lengths[month - 1];
-    if(!Number.isInteger(day) || day < 1 || day > max){
-      throw new Error(`Metric month ${pad2(month)} has ${max} days in ${year}.`);
-    }
-
-    return lengths.slice(0, month - 1).reduce((sum, value) => sum + value, 0) + day;
-  }
-
-  function classifyMetricDate(year, month, day){
-    const leap = isLeapYear(year);
-    if(month === 10 && leap && day === 38) return "Leap Day / New Year’s Eve";
-    if(month % 2 === 0 && day === 37) return month === 10 ? "Bonus Rest Day / New Year’s Eve" : "Bonus Rest Day";
-    const metric_day = ((day - 1) % 6) + 1;
-    return metric_day <= 4 ? `Focus Day ${metric_day}` : `Rest Day ${metric_day - 4}`;
-  }
-
-  function formatMetric(obj){ return `${obj.year}-${pad2(obj.month)}-${pad2(obj.day)}`; }
-  function formatGregorian(obj){ return `g${obj.year}-${pad2(obj.month)}-${pad2(obj.day)}`; }
-
-  function convertGregorianToMetric(year, month, day){
-    const dayOfYear = dayOfYearFromGregorian(year, month, day);
-    const metric = metricFrometric_dayOfYear(year, dayOfYear);
-    return {
-      gregorian: { year, month, day },
-      metric,
-      dayOfYear,
-      status: classifyMetricDate(metric.year, metric.month, metric.day),
-      leap: isLeapYear(year)
-    };
-  }
-
-  function convertMetricToGregorian(year, month, day){
-    const dayOfYear = dayOfYearFromMetric(year, month, day);
-    const gregorian = gregorianFrometric_dayOfYear(year, dayOfYear);
-    const metric = { year, month, day };
-    return {
-      gregorian,
-      metric,
-      dayOfYear,
-      status: classifyMetricDate(year, month, day),
-      leap: isLeapYear(year)
-    };
-  }
-
-  function renderResult(target, data, mode){
-    if(!target) return;
-
-    const primaryLabel = mode === "metricToGregorian" ? "Gregorian date" : "Metric date";
-    const primary = mode === "metricToGregorian" ? formatGregorian(data.gregorian) : formatMetric(data.metric);
-    const secondaryLabel = mode === "metricToGregorian" ? "Metric" : "Gregorian";
-    const secondary = mode === "metricToGregorian" ? formatMetric(data.metric) : formatGregorian(data.gregorian);
-
-    target.className = "result-box success";
-    target.innerHTML = `
-      <div class="result-title">${primaryLabel}</div>
-      <div class="result-date">${primary}</div>
-      <div class="result-secondary">${secondaryLabel}: <strong>${secondary}</strong></div>
-    `;
-  }
-
-  function renderError(target, message){
-    if(!target) return;
-    target.className = "result-box error";
-    target.innerHTML = `<div class="result-title">Check the date</div><p><strong>${message}</strong></p>`;
-  }
-
-  function setToday(){
+/* Site interactions. Calendar arithmetic lives in calendar.js. */
+(() => {
+  'use strict';
+  const C = window.MetricCalendar;
+  const $ = selector => document.querySelector(selector);
+  const $$ = selector => [...document.querySelectorAll(selector)];
+  const pad = n => String(n).padStart(2, '0');
+  function todayData() {
     const now = new Date();
-    const data = convertGregorianToMetric(now.getFullYear(), now.getMonth() + 1, now.getDate());
-
-    document.querySelectorAll("[data-today-metric]").forEach(el => el.textContent = formatMetric(data.metric));
-    document.querySelectorAll("[data-today-gregorian]").forEach(el => el.textContent = formatGregorian(data.gregorian));
-    document.querySelectorAll("[data-today-status]").forEach(el => el.textContent = data.status);
-    document.querySelectorAll("[data-today-month]").forEach(el => el.textContent = `Metric month ${pad2(data.metric.month)}`);
+    return C.convertGregorianToMetric(now.getFullYear(), now.getMonth() + 1, now.getDate());
   }
-
-  function initConverter(){
-    const result = document.querySelector("[data-converter-result]");
-    const toggleButtons = document.querySelectorAll("[data-converter-mode]");
-    const gregorianForm = document.querySelector("[data-gregorian-form]");
-    const metricForm = document.querySelector("[data-metric-form]");
-    const gregorianPanel = document.querySelector("[data-panel-gregorian]");
-    const metricPanel = document.querySelector("[data-panel-metric]");
-    const gregorianInput = document.querySelector("[data-gregorian-input]");
-    const metricYear = document.querySelector("[data-metric-year]");
-    const metricMonth = document.querySelector("[data-metric-month]");
-    const metric_day = document.querySelector("[data-metric-day]");
-
-    if(!result || !toggleButtons.length) return;
-
-    let mode = "gregorianToMetric";
-
-    function setMode(next){
-      mode = next;
-      toggleButtons.forEach(button => {
-        button.classList.toggle("active", button.dataset.converterMode === mode);
-        button.setAttribute("aria-pressed", button.dataset.converterMode === mode ? "true" : "false");
-      });
-      gregorianPanel.classList.toggle("hidden", mode !== "gregorianToMetric");
-      metricPanel.classList.toggle("hidden", mode !== "metricToGregorian");
-      result.className = "result-box";
-      result.innerHTML = `<div class="result-title">Ready</div><p>Enter a date and select convert.</p>`;
-    }
-
-    toggleButtons.forEach(button => button.addEventListener("click", () => setMode(button.dataset.converterMode)));
-
-    const today = new Date();
-    if(gregorianInput) gregorianInput.value = `${today.getFullYear()}-${pad2(today.getMonth()+1)}-${pad2(today.getDate())}`;
-    if(metricYear) metricYear.value = today.getFullYear();
-
-    gregorianForm?.addEventListener("submit", function(event){
-      event.preventDefault();
-      try{
-        const [year, month, day] = gregorianInput.value.split("-").map(Number);
-        renderResult(result, convertGregorianToMetric(year, month, day), "gregorianToMetric");
-      }catch(error){
-        renderError(result, error.message);
-      }
-    });
-
-    metricForm?.addEventListener("submit", function(event){
-      event.preventDefault();
-      try{
-        const year = Number(metricYear.value);
-        const month = Number(metricMonth.value);
-        const day = Number(metric_day.value);
-        renderResult(result, convertMetricToGregorian(year, month, day), "metricToGregorian");
-      }catch(error){
-        renderError(result, error.message);
-      }
-    });
-
-    setMode(mode);
+  function refreshToday() {
+    const today = todayData();
+    $$('[data-today-metric]').forEach(el => el.textContent = C.formatMetric(today.metric));
+    $$('[data-today-gregorian]').forEach(el => el.textContent = C.formatGregorian(today.gregorian));
+    $$('[data-today-status]').forEach(el => el.textContent = today.status);
   }
-
-  function initYearCheck(){
-    const input = document.querySelector("[data-year-check]");
-    const output = document.querySelector("[data-year-check-output]");
-    if(!input || !output) return;
-
-    function update(){
-      const year = Number(input.value || new Date().getFullYear());
-      const leap = isLeapYear(year);
-      const finalMetric = `${year}-10-${leap ? "38" : "37"}`;
-      const finalGregorian = `g${year}-12-31`;
-      output.innerHTML = `<strong>${year} is a ${leap ? "leap" : "standard"} year.</strong><br>Final Gregorian day: ${finalGregorian}<br>Final Metric day: ${finalMetric}`;
-    }
-
-    input.value = new Date().getFullYear();
-    input.addEventListener("input", update);
-    update();
-  }
-
-  document.addEventListener("DOMContentLoaded", function(){
-    setToday();
-    initConverter();
-    initYearCheck();
+  refreshToday();
+  setInterval(refreshToday, 60000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshToday(); });
+  const menu = $('.menu-toggle');
+  menu.hidden = false;
+  document.documentElement.classList.add('js');
+  menu.addEventListener('click', () => {
+    const open = menu.getAttribute('aria-expanded') !== 'true';
+    menu.setAttribute('aria-expanded', String(open));
+    $('#main-nav').classList.toggle('is-open', open);
   });
-
-  window.MetricCalendar = {
-    isLeapYear,
-    monthLengths,
-    convertGregorianToMetric,
-    convertMetricToGregorian,
-    formatMetric,
-    formatGregorian
-  };
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') {
+      menu.setAttribute('aria-expanded', 'false');
+      $('#main-nav').classList.remove('is-open');
+      menu.focus();
+    }
+  });
+  function openFragment() {
+    try {
+      const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (target?.tagName === 'DETAILS') target.open = true;
+    } catch { /* Malformed fragments do not affect the page. */ }
+  }
+  openFragment();
+  window.addEventListener('hashchange', openFragment);
+  const form = $('#date-form');
+  if (!form) return;
+  let mode = 'gregorian';
+  let lastData = null;
+  const dateInput = $('#gregorian-date');
+  const yearInput = $('#metric-year');
+  const monthInput = $('#metric-month');
+  const dayInput = $('#metric-day');
+  const error = $('#input-error');
+  const output = $('#conversion-result');
+  function clearError() {
+    error.hidden = true; error.textContent = '';
+    form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+  }
+  function invalidateResult() {
+    lastData = null;
+    output.innerHTML = '<p class="eyebrow">Your converted date</p><p class="result-placeholder">Ready when you are.</p><p>Convert the date to update your result.</p>';
+    $('#result-actions').hidden = true;
+    $('#result-context').hidden = true;
+    $('#copy-status').textContent = '';
+  }
+  function updateLimit() {
+    try {
+      const max = C.monthLengths(Number(yearInput.value))[Number(monthInput.value) - 1];
+      dayInput.max = max;
+      $('#metric-limit').textContent = `Metric month ${pad(monthInput.value)} has ${max} days in ${String(Number(yearInput.value)).padStart(4,'0')}.`;
+    } catch {
+      dayInput.max = 38;
+      $('#metric-limit').textContent = 'Enter a whole year from 1 to 9999 to check the month length.';
+    }
+  }
+  function populate(data) {
+    dateInput.value = C.formatMetric(data.gregorian);
+    yearInput.value = data.metric.year;
+    monthInput.value = data.metric.month;
+    dayInput.value = data.metric.day;
+    updateLimit();
+  }
+  function setMode(next) {
+    if (lastData) populate(lastData);
+    mode = next;
+    $$('[data-mode]').forEach(b => b.setAttribute('aria-pressed',String(b.dataset.mode === mode)));
+    $('#gregorian-fields').hidden = mode !== 'gregorian';
+    $('#metric-fields').hidden = mode !== 'metric';
+    dateInput.disabled = mode !== 'gregorian';
+    [yearInput,monthInput,dayInput].forEach(el => el.disabled = mode !== 'metric');
+    clearError(); invalidateResult();
+  }
+  function renderMonth(data) {
+    const { year, month, day } = data.metric;
+    $('#result-month-heading').textContent = `Metric month ${pad(month)}, ${String(year).padStart(4,'0')}`;
+    $('#result-month-explanation').textContent = `Six metric weeks, plus ${month % 2 ? 'no Bonus Rest Day' : 'one Bonus Rest Day'}${month === 10 && data.leap ? ' and one Leap Day' : ''}. The outlined cell is your date. Each regular column is labelled Focus or Rest.`;
+    const headings = [1,2,3,4,5,6].map(n=>`<th scope="col">${n < 5 ? 'Focus' : 'Rest'}<span>${n < 5 ? n : n-4}</span></th>`).join('');
+    let rows = '';
+    for (let w=0;w<6;w++) {
+      rows += '<tr>';
+      for (let d=1;d<=6;d++) {
+        const value=w*6+d;
+        rows += `<td class="${d>4?'rest ':''}${value === day?'selected':''}"${value===day?' aria-label="Selected date, metric day '+value+'"':''}>${pad(value)}</td>`;
+      }
+      rows += '</tr>';
+    }
+    const extra=[];
+    if (month % 2 === 0) extra.push(`<span class="extra-day ${day===37?'selected':''}">37 · Bonus Rest Day${day===37?' · selected':''}</span>`);
+    if (month===10 && data.leap) extra.push(`<span class="extra-day ${day===38?'selected':''}">38 · Leap Day${day===38?' · selected':''}</span>`);
+    $('#result-month').innerHTML = `<table class="mini-calendar"><caption class="sr-only">Metric month ${pad(month)} in ${year}</caption><thead><tr>${headings}</tr></thead><tbody>${rows}</tbody></table>${extra.length?`<div class="extra-days">${extra.join('')}</div>`:''}`;
+    $('#result-context').hidden = false;
+  }
+  function render(data) {
+    clearError(); lastData = data;
+    const primary = mode === 'gregorian' ? C.formatMetric(data.metric) : C.formatGregorian(data.gregorian);
+    const prior = C.monthLengths(data.metric.year).slice(0,data.metric.month-1).reduce((a,b)=>a+b,0);
+    output.innerHTML = `<p class="eyebrow">${mode==='gregorian'?'Metric':'Gregorian'} date</p><p class="result-date">${primary}</p><p class="result-pair">${C.formatGregorian(data.gregorian)} <span aria-hidden="true">=</span> ${C.formatMetric(data.metric)}</p><p class="status-chip">${data.status}</p><dl class="result-facts"><div><dt>Day of year</dt><dd>${data.dayOfYear} of ${data.leap?366:365}</dd></div><div><dt>Year type</dt><dd>${data.leap?'Leap':'Common'} year</dd></div><div><dt>Metric week</dt><dd>${data.week?`${data.week} of 6 · day ${data.weekDay}`:'Outside the metric week'}</dd></div><div><dt>Metric month</dt><dd>${pad(data.metric.month)} · ${C.monthLengths(data.metric.year)[data.metric.month-1]} days</dd></div></dl><p class="result-calculation">${prior} days before metric month ${pad(data.metric.month)} + day ${data.metric.day} = day ${data.dayOfYear} of the year.</p>`;
+    $('#result-actions').hidden = false;
+    $('#copy-status').textContent = '';
+    const source = mode === 'gregorian' ? data.gregorian : data.metric;
+    $('#share-result').href = `/converter.html?date=${C.formatMetric(source)}&from=${mode}`;
+    renderMonth(data);
+  }
+  function convert(reveal = false) {
+    try {
+      let data;
+      if (mode === 'gregorian') {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(dateInput.value)) throw new Error('Choose a valid Gregorian date in years 1 to 9999.');
+        data = C.convertGregorianToMetric(...dateInput.value.split('-').map(Number));
+      } else data = C.convertMetricToGregorian(Number(yearInput.value),Number(monthInput.value),Number(dayInput.value));
+      render(data);
+      if (reveal && window.matchMedia('(max-width: 700px)').matches) {
+        $('.converter-output').scrollIntoView({block:'start',behavior:'instant'});
+      }
+    } catch (e) {
+      invalidateResult(); error.textContent = e.message; error.hidden = false;
+      const invalid = mode === 'gregorian' ? dateInput : (!yearInput.validity.valid || !yearInput.value ? yearInput : dayInput);
+      invalid.setAttribute('aria-invalid','true'); invalid.focus();
+    }
+  }
+  form.addEventListener('submit', event => { event.preventDefault(); convert(true); });
+  form.addEventListener('input', () => { clearError(); updateLimit(); invalidateResult(); });
+  $$('[data-mode]').forEach(b => b.addEventListener('click', () => { setMode(b.dataset.mode); convert(); }));
+  $('#use-today').addEventListener('click', () => { populate(todayData()); convert(true); });
+  $$('[data-example]').forEach(b => b.addEventListener('click', () => { setMode('gregorian'); dateInput.value = b.dataset.example; convert(true); }));
+  $('#copy-result').addEventListener('click', async () => {
+    if (!lastData) return;
+    try {
+      await navigator.clipboard.writeText(`${C.formatGregorian(lastData.gregorian)} = ${C.formatMetric(lastData.metric)} · ${lastData.status}`);
+      $('#copy-status').textContent = 'Dates copied.';
+    } catch { $('#copy-status').textContent = 'Copy is unavailable here. Select the dates above and copy them.'; }
+  });
+  populate(todayData()); setMode('gregorian');
+  const params = new URLSearchParams(location.search);
+  if (params.has('date')) {
+    const value = params.get('date');
+    const direction = params.get('from') || 'gregorian';
+    try {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !['metric','gregorian'].includes(direction)) throw new Error('This link contains an invalid date or conversion direction. Enter a valid date below.');
+      const numbers = value.split('-').map(Number);
+      const data = direction === 'metric' ? C.convertMetricToGregorian(...numbers) : C.convertGregorianToMetric(...numbers);
+      populate(data); setMode(direction); render(data);
+    } catch (e) { invalidateResult(); error.textContent = e.message; error.hidden = false; }
+  } else convert();
 })();
