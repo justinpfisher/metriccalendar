@@ -9,6 +9,11 @@
   'use strict';
   const pad2 = n => String(n).padStart(2, '0');
   const padYear = n => String(n).padStart(4, '0');
+  const monthNames = Object.freeze(['Renewal','Awaken','Bloom','Thrive','Radiate','Sustain','Gather','Reflect','Diminish','Restore']);
+  function monthName(month) {
+    if (!Number.isInteger(month) || month < 1 || month > 10) throw new Error('Metric month must be 01 through 10.');
+    return monthNames[month - 1];
+  }
   function validateYear(year) {
     if (!Number.isInteger(year) || year < 1 || year > 9999) throw new Error('Enter a whole year from 1 to 9999.');
   }
@@ -50,5 +55,5 @@
   }
   const formatMetric = ({year, month, day}) => `${padYear(year)}-${pad2(month)}-${pad2(day)}`;
   const formatGregorian = date => `g${formatMetric(date)}`;
-  return { isLeapYear, monthLengths, gregorianMonthLengths, classifyMetricDate, convertGregorianToMetric, convertMetricToGregorian, formatMetric, formatGregorian };
+  return { isLeapYear, monthLengths, monthName, gregorianMonthLengths, classifyMetricDate, convertGregorianToMetric, convertMetricToGregorian, formatMetric, formatGregorian };
 });

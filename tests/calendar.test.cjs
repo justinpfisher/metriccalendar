@@ -4,6 +4,13 @@ const C = require('../calendar.js');
 const g = (...date) => C.convertGregorianToMetric(...date);
 const m = (...date) => C.convertMetricToGregorian(...date);
 
+test('month names are consistent display labels, not date-format changes', () => {
+  const names = ["Renewal","Awaken","Bloom","Thrive","Radiate","Sustain","Gather","Reflect","Diminish","Restore"];
+  assert.deepEqual(names.map((_, index) => C.monthName(index + 1)), names);
+  for (const value of [0, 11, -1, 1.5, '1', null]) assert.throws(() => C.monthName(value));
+  assert.equal(C.formatMetric({year:2026,month:5,day:36}), '2026-05-36');
+});
+
 test('published examples, boundaries, and century rules', () => {
   assert.deepEqual(C.monthLengths(2026),[36,37,36,37,36,37,36,37,36,37]);
   assert.deepEqual(C.monthLengths(2028),[36,37,36,37,36,37,36,37,36,38]);

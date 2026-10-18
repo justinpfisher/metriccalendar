@@ -40,6 +40,10 @@ Set `PORT` to choose a different port. The preview server binds only to localhos
 ## Calendar rules and resolved edge cases
 
 - Ten months with lengths `36,37,36,37,36,37,36,37,36,37`.
+- Month names (01–10): Renewal, Awaken, Bloom, Thrive, Radiate, Sustain,
+  Gather, Reflect, Diminish, Restore. These are symbolic phases rather than
+  geographically fixed seasons; numbers remain the stable identifiers.
+  Names appear in the year overview, specification, converter and today view.
 - In leap years, month 10 has 38 days. Leap rule: divisible by 4, except centuries
   must be divisible by 400.
 - Six six-day metric weeks per month. Four Focus Days followed by two Rest Days.

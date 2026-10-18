@@ -47,6 +47,7 @@ const axePath = process.env.QA_AXE_PATH || require.resolve('axe-core/axe.min.js'
 
   await page.goto(base+'/converter.html?date=2028-12-31&from=gregorian');
   assert.equal(await page.locator('.result-date').textContent(),'2028-10-38');
+  assert.equal(await page.locator('#metric-month option[value="5"]').textContent(),'05 — Radiate');
   assert.match(await page.locator('#conversion-result').textContent(),/Leap Day \/ New Year’s Eve/);
   await page.getByRole('button',{name:'Metric → Gregorian',exact:true}).click();
   assert.equal(await page.locator('#metric-day').inputValue(),'38');
@@ -126,10 +127,10 @@ const axePath = process.env.QA_AXE_PATH || require.resolve('axe-core/axe.min.js'
     await localPage.evaluate(()=>window.dispatchEvent(new Event('focus')));
     assert.equal(await localPage.locator('.hero-calendar [aria-current="date"]').count(),1);
     assert.equal(await localPage.locator('.hero-calendar [aria-current="date"]').evaluate(el=>el.tagName==='TD'?el.textContent:el.querySelector('.bonus-number').textContent),metric.slice(-2));
-    assert.equal(await localPage.locator('.calendar-heading h2').textContent(),'Metric month '+metric.slice(5,7));
+    assert.equal(await localPage.locator('.calendar-heading h2').textContent(),'Metric month '+metric.slice(5,7)+' · '+require('../calendar.js').monthName(Number(metric.slice(5,7))));
     assert.equal(await localPage.locator('.calendar-top .small-label').textContent(),metric.slice(5,7)+' / 10');
     assert.equal(await localPage.locator('.hero-calendar .bonus-strip').count(),extras);
-    assert.equal(await localPage.locator('#calendar-caption strong').textContent(),`Today: ${metric} · ${status}`);
+    assert.equal(await localPage.locator('#calendar-caption strong').textContent(),`Today: ${metric} · ${require('../calendar.js').monthName(Number(metric.slice(5,7)))} · ${status}`);
   }
   // A visible tab updates across midnight without a reload or focus event.
   for (const [before,after] of [['2028-01-01T07:59:59.500Z','2028-01-01'],['2029-01-01T07:59:59.500Z','2029-01-01']]) {
