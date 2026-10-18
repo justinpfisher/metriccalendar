@@ -11,6 +11,23 @@ test('month names are consistent display labels, not date-format changes', () =>
   assert.equal(C.formatMetric({year:2026,month:5,day:36}), '2026-05-36');
 });
 
+test('metric weekday names stay tied to positions and leave conversions unchanged', () => {
+  const names = ['Begin','Create','Connect','Share','Pause','Renew'];
+  assert.deepEqual(names.map((_, i) => C.weekdayName(i + 1)), names);
+  for (const value of [0, 7, -1, 1.5, '1', null, NaN]) assert.throws(() => C.weekdayName(value));
+  for (let day = 1; day <= 36; day++) {
+    const result = m(2026, 1, day);
+    assert.equal(C.weekdayName(result.weekDay), names[(day - 1) % 6]);
+    assert.equal(result.status, result.weekDay <= 4 ? 'Focus Day ' + result.weekDay : 'Rest Day ' + (result.weekDay - 4));
+  }
+  for (const date of [[2026,2,37],[2028,10,37],[2028,10,38]]) {
+    const result = m(...date);
+    assert.equal(result.weekDay, null);
+    assert.equal(result.week, null);
+  }
+  assert.equal(C.formatMetric(m(2026,5,36).metric), '2026-05-36');
+});
+
 test('published examples, boundaries, and century rules', () => {
   assert.deepEqual(C.monthLengths(2026),[36,37,36,37,36,37,36,37,36,37]);
   assert.deepEqual(C.monthLengths(2028),[36,37,36,37,36,37,36,37,36,38]);

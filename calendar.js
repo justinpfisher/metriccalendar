@@ -14,6 +14,12 @@
     if (!Number.isInteger(month) || month < 1 || month > 10) throw new Error('Metric month must be 01 through 10.');
     return monthNames[month - 1];
   }
+  // Names are presentation labels; the six weekday positions remain canonical.
+  const weekdayNames = Object.freeze(['Begin','Create','Connect','Share','Pause','Renew']);
+  function weekdayName(day) {
+    if (!Number.isInteger(day) || day < 1 || day > 6) throw new Error('Metric weekday must be 1 through 6.');
+    return weekdayNames[day - 1];
+  }
   function validateYear(year) {
     if (!Number.isInteger(year) || year < 1 || year > 9999) throw new Error('Enter a whole year from 1 to 9999.');
   }
@@ -55,5 +61,5 @@
   }
   const formatMetric = ({year, month, day}) => `${padYear(year)}-${pad2(month)}-${pad2(day)}`;
   const formatGregorian = date => `g${formatMetric(date)}`;
-  return { isLeapYear, monthLengths, monthName, gregorianMonthLengths, classifyMetricDate, convertGregorianToMetric, convertMetricToGregorian, formatMetric, formatGregorian };
+  return { isLeapYear, monthLengths, monthName, weekdayName, gregorianMonthLengths, classifyMetricDate, convertGregorianToMetric, convertMetricToGregorian, formatMetric, formatGregorian };
 });
