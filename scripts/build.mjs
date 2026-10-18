@@ -1,6 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import MetricCalendar from '../calendar.js';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const pages = JSON.parse(await readFile(path.join(root, 'content/pages.json'), 'utf8'));
 const base = 'https://metriccalendar.org';
@@ -10,7 +11,7 @@ function diagrams(body) {
   const headings = [1,2,3,4,5,6].map(n => `<th scope="col">${n < 5 ? 'Focus' : 'Rest'}<span>${n < 5 ? n : n-4}</span></th>`).join('');
   const rows = Array.from({length:6},(_,w)=>`<tr>${Array.from({length:6},(_,d)=>`<td${d>3?' class="rest"':''}>${String(w*6+d+1).padStart(2,'0')}</td>`).join('')}</tr>`).join('');
   const month = `<table class="mini-calendar"><caption class="sr-only">Six metric weeks: four Focus Days then two Rest Days in each row</caption><thead><tr>${headings}</tr></thead><tbody>${rows}</tbody></table>`;
-  const year = Array.from({length:10},(_,i)=>`<div class="year-month${i%2?' even':''}"><div class="month-label">${String(i+1).padStart(2,'0')}<small>Month</small></div><div class="month-ticks" aria-hidden="true">${'<i></i>'.repeat(36)}</div><span class="month-days">${i===9?'37 / 38 days':`${i%2?37:36} days`}</span></div>`).join('');
+  const year = Array.from({length:10},(_,i)=>`<div class="year-month${i%2?' even':''}"><div class="month-label"><span class="month-number">${String(i+1).padStart(2,'0')}</span><small class="metric-month-name">${MetricCalendar.monthName(i+1)}</small></div><div class="month-ticks" aria-hidden="true">${'<i></i>'.repeat(36)}</div><span class="month-days">${i===9?'37 / 38 days':`${i%2?37:36} days`}</span></div>`).join('');
   return body.replace('<div class="month-diagram" data-static-month></div>',`<div class="month-diagram">${month}</div>`).replace('<div class="year-diagram" aria-label="Metric month lengths" data-year-diagram></div>',`<div class="year-diagram" role="group" aria-label="Metric month lengths">${year}</div>`);
 }
 function nav(p, footer = false) {
@@ -48,10 +49,10 @@ function render(p, body) {
   <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png">
   <link rel="manifest" href="/assets/favicons/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=3">
+  <link rel="stylesheet" href="/styles.css?v=4">
   <script type="application/ld+json">${JSON.stringify(data).replaceAll('<','\\u003c')}</script>
-  <script defer src="/calendar.js?v=2"></script>
-  <script defer src="/script.js?v=3"></script>
+  <script defer src="/calendar.js?v=3"></script>
+  <script defer src="/script.js?v=4"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
