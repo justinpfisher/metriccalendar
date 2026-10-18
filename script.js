@@ -16,9 +16,9 @@
     const {year, month, day} = today.metric;
     calendar.querySelector('.calendar-top .eyebrow').textContent = 'Your metric month';
     calendar.querySelector('.calendar-top .small-label').textContent = `${pad(month)} / 10`;
-    calendar.querySelector('h2').textContent = `Metric month ${pad(month)}`;
+    calendar.querySelector('h2').textContent = `Metric month ${pad(month)} · ${C.monthName(month)}`;
     calendar.querySelector('.calendar-heading p').textContent = `${year} · ${C.monthLengths(year)[month - 1]} days · 6 metric weeks`;
-    calendar.querySelector('caption').textContent = `Metric month ${pad(month)}, ${year}. Today is day ${day}.`;
+    calendar.querySelector('caption').textContent = `Metric month ${pad(month)} (${C.monthName(month)}), ${year}. Today is day ${day}.`;
     calendar.querySelectorAll('td').forEach((cell, index) => {
       const current = index + 1 === day;
       cell.classList.toggle('is-today', current);
@@ -32,7 +32,7 @@
       extras.push(`<div class="bonus-strip${current ? ' is-today' : ''}"${current ? ' aria-current="date"' : ''}><span class="bonus-number">${extra}</span><div><strong>${label}${current ? ' · Today' : ''}</strong><span>Outside the metric week</span></div><span class="sun-mark" aria-hidden="true">✳</span></div>`);
     }
     calendar.querySelector('[data-today-extras]').innerHTML = extras.join('');
-    calendar.querySelector('figcaption').innerHTML = `<strong>Today: ${C.formatMetric(today.metric)} · ${today.status}</strong><span>Gregorian: ${C.formatGregorian(today.gregorian)} · Your local date</span>`;
+    calendar.querySelector('figcaption').innerHTML = `<strong>Today: ${C.formatMetric(today.metric)} · ${C.monthName(month)} · ${today.status}</strong><span>Gregorian: ${C.formatGregorian(today.gregorian)} · Your local date</span>`;
   }
   function refreshToday() {
     clearTimeout(todayTimer);
@@ -41,7 +41,7 @@
     const date = C.formatGregorian(today.gregorian);
     // Keep an open tab current without rebuilding or announcing an unchanged day.
     if (date !== displayedDate) {
-      $$('[data-today-metric]').forEach(el => el.textContent = C.formatMetric(today.metric));
+      $$('[data-today-metric]').forEach(el => el.textContent = `${C.formatMetric(today.metric)} · ${C.monthName(today.metric.month)}`);
       $$('[data-today-gregorian]').forEach(el => el.textContent = date);
       $$('[data-today-status]').forEach(el => el.textContent = today.status);
       renderTodayCalendar(today);
@@ -102,7 +102,7 @@
     try {
       const max = C.monthLengths(Number(yearInput.value))[Number(monthInput.value) - 1];
       dayInput.max = max;
-      $('#metric-limit').textContent = `Metric month ${pad(monthInput.value)} has ${max} days in ${String(Number(yearInput.value)).padStart(4,'0')}.`;
+      $('#metric-limit').textContent = `${C.monthName(Number(monthInput.value))} (metric month ${pad(monthInput.value)}) has ${max} days in ${String(Number(yearInput.value)).padStart(4,'0')}.`;
     } catch {
       dayInput.max = 38;
       $('#metric-limit').textContent = 'Enter a whole year from 1 to 9999 to check the month length.';
@@ -127,7 +127,7 @@
   }
   function renderMonth(data) {
     const { year, month, day } = data.metric;
-    $('#result-month-heading').textContent = `Metric month ${pad(month)}, ${String(year).padStart(4,'0')}`;
+    $('#result-month-heading').textContent = `Metric month ${pad(month)} · ${C.monthName(month)}, ${String(year).padStart(4,'0')}`;
     $('#result-month-explanation').textContent = `Six metric weeks, plus ${month % 2 ? 'no Bonus Rest Day' : 'one Bonus Rest Day'}${month === 10 && data.leap ? ' and one Leap Day' : ''}. The outlined cell is your date. Each regular column is labelled Focus or Rest.`;
     const headings = [1,2,3,4,5,6].map(n=>`<th scope="col">${n < 5 ? 'Focus' : 'Rest'}<span>${n < 5 ? n : n-4}</span></th>`).join('');
     let rows = '';
@@ -142,14 +142,14 @@
     const extra=[];
     if (month % 2 === 0) extra.push(`<span class="extra-day ${day===37?'selected':''}">37 · Bonus Rest Day${day===37?' · selected':''}</span>`);
     if (month===10 && data.leap) extra.push(`<span class="extra-day ${day===38?'selected':''}">38 · Leap Day${day===38?' · selected':''}</span>`);
-    $('#result-month').innerHTML = `<table class="mini-calendar"><caption class="sr-only">Metric month ${pad(month)} in ${year}</caption><thead><tr>${headings}</tr></thead><tbody>${rows}</tbody></table>${extra.length?`<div class="extra-days">${extra.join('')}</div>`:''}`;
+    $('#result-month').innerHTML = `<table class="mini-calendar"><caption class="sr-only">Metric month ${pad(month)} (${C.monthName(month)}) in ${year}</caption><thead><tr>${headings}</tr></thead><tbody>${rows}</tbody></table>${extra.length?`<div class="extra-days">${extra.join('')}</div>`:''}`;
     $('#result-context').hidden = false;
   }
   function render(data) {
     clearError(); lastData = data;
     const primary = mode === 'gregorian' ? C.formatMetric(data.metric) : C.formatGregorian(data.gregorian);
     const prior = C.monthLengths(data.metric.year).slice(0,data.metric.month-1).reduce((a,b)=>a+b,0);
-    output.innerHTML = `<p class="eyebrow">${mode==='gregorian'?'Metric':'Gregorian'} date</p><p class="result-date">${primary}</p><p class="result-pair">${C.formatGregorian(data.gregorian)} <span aria-hidden="true">=</span> ${C.formatMetric(data.metric)}</p><p class="status-chip">${data.status}</p><dl class="result-facts"><div><dt>Day of year</dt><dd>${data.dayOfYear} of ${data.leap?366:365}</dd></div><div><dt>Year type</dt><dd>${data.leap?'Leap':'Common'} year</dd></div><div><dt>Metric week</dt><dd>${data.week?`${data.week} of 6 · day ${data.weekDay}`:'Outside the metric week'}</dd></div><div><dt>Metric month</dt><dd>${pad(data.metric.month)} · ${C.monthLengths(data.metric.year)[data.metric.month-1]} days</dd></div></dl><p class="result-calculation">${prior} days before metric month ${pad(data.metric.month)} + day ${data.metric.day} = day ${data.dayOfYear} of the year.</p>`;
+    output.innerHTML = `<p class="eyebrow">${mode==='gregorian'?'Metric':'Gregorian'} date</p><p class="result-date">${primary}</p><p class="result-pair">${C.formatGregorian(data.gregorian)} <span aria-hidden="true">=</span> ${C.formatMetric(data.metric)}</p><p class="status-chip">${data.status}</p><dl class="result-facts"><div><dt>Day of year</dt><dd>${data.dayOfYear} of ${data.leap?366:365}</dd></div><div><dt>Year type</dt><dd>${data.leap?'Leap':'Common'} year</dd></div><div><dt>Metric week</dt><dd>${data.week?`${data.week} of 6 · day ${data.weekDay}`:'Outside the metric week'}</dd></div><div><dt>Metric month</dt><dd>${pad(data.metric.month)} · ${C.monthName(data.metric.month)} · ${C.monthLengths(data.metric.year)[data.metric.month-1]} days</dd></div></dl><p class="result-calculation">${prior} days before metric month ${pad(data.metric.month)} (${C.monthName(data.metric.month)}) + day ${data.metric.day} = day ${data.dayOfYear} of the year.</p>`;
     $('#result-actions').hidden = false;
     $('#copy-status').textContent = '';
     const source = mode === 'gregorian' ? data.gregorian : data.metric;
