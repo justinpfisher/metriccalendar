@@ -47,6 +47,14 @@ Set `PORT` to choose a different port. The preview server binds only to localhos
 - In leap years, month 10 has 38 days. Leap rule: divisible by 4, except centuries
   must be divisible by 400.
 - Six six-day metric weeks per month. Four Focus Days followed by two Rest Days.
+- Metric weekdays (1–6) are named Begin, Create, Connect, Share, Pause, Renew.
+  Names are English presentation labels only; `status` values, weekday numbers,
+  date calculations and stable numeric formats remain unchanged. No weekday is
+  assigned to a Bonus Rest Day or Leap Day.
+- The Calendar specification's naming section explains each of the ten month
+  and six weekday names, metaphorical rather than climatic meaning, the limits
+  of cultural neutrality, localisation, existing observances, and compatibility.
+  The homepage previews the reasoning; the FAQ links to the full explanation.
 - Day 37 of an even month is a Bonus Rest Day, outside the regular metric weeks.
 - Month 10 day 38 is Leap Day, also outside the regular metric weeks.
 - Year number and ordinal day are preserved in both conversion directions.
