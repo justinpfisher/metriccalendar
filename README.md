@@ -22,6 +22,8 @@ for the custom domain, including on the 404 page.
 
 ## Editing and building
 
+**Development location:** Make routine source edits, run `node --test tests/calendar.test.cjs`, `node scripts/build.mjs` and `node scripts/check.mjs` on the GMKtec first, then commit. Keep the existing public-repository GitHub-hosted PR check and Pages deployment; standard hosted minutes here are free and public forks must not run on the owner's PC.
+
 Requires Node.js 22 or later. The build and core tests have **no npm dependencies**.
 
 1. Edit page bodies in `content/*.html` and metadata in `content/pages.json`.
