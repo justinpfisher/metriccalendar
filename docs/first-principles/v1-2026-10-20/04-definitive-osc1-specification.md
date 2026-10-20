@@ -30,6 +30,8 @@ Pattern: **OSC1:[+-][0-9]{6,}-[0-9]{3}**. Require a sign, at least six year digi
 - **OSC1:+000026-214** — Gregorian 2026-10-19.
 - **OSC1:-000001-365** — day immediately before epoch.
 
+Reject *negative zero* (`OSC1:-000000-001`) and redundant leading zeroes beyond the minimum six year digits: only one canonical string is permitted for each integer date. The reference validator supplies `format_date` and `parse_date` with strict round-trip tests.
+
 The format cannot be mistaken for existing unprefixed Metric dates (YYYY-MM-DD), project-prefixed Gregorian dates (gYYYY-MM-DD), or standard ISO civil date strings. Names and display labels must be mapped *from* numeric identifiers and never replace them as keys. The year field can expand indefinitely with arbitrary-precision integer support. Chronological sorting is by **A**, not raw lexicographic sorting of variable-length signed labels.
 
 ## Reference implementation (Python 3; standard library)
@@ -100,5 +102,7 @@ Gregorian centuries, including 2100, do not determine OSC1 leap years. This is a
 ## Proof and test contract
 
 B(y) increases by either 365 or 366. Its contiguous half-open intervals [B(y),B(y+1)) cover each integer absolute day exactly once. Thus A↔(y,d) is a bijection. Since floor(x+31)=floor(x)+31, the 128-year cycle identity is exact. These are *proofs*, not empirical claims.
+
+A published 2000–2049 UTC March-equinox event-date table matches all **50 of 50** proposed OSC1 year-start *civil dates*, including 21 March (2003, 2007) and 19 March (2044, 2048). This near-epoch comparison does NOT validate exact event times or long-term accuracy. Source: [equinox event table](https://www.timeanddate.com/calendar/seasons.html?n=1440&year=2000).
 
 Validation must cover all dates in multiple full 128-year cycles, negative years, all leap boundaries, 2100/other Gregorian exceptions, date−1/date+1, every ordinal of a full cycle, exact reverse conversion and invalid dates. The accompanying standard-library test script also compares a Gregorian 1999–2400 day range against independent Gregorian date arithmetic, and separately enumerates bounded structural layouts. **Tests performed in Chat's container are not GMKtec-local tests, GitHub CI checks or astronomical ephemeris verification.**

@@ -15,7 +15,7 @@
 
 ## Computational reproduction
 
-`python validation/verify.py` (Python 3 standard library only; run from any directory) verifies the candidate scheme, exact leap cycle, reverse conversion, representative proleptic Gregorian range, continuous-work schedules, candidate enumeration and drift *relative to a deliberately constant nominal mean*. Its first execution in Chat's isolated container yielded **344,234 counted checks passing**. This is not a run on the owner's GMKtec and not a prediction of observed equinox dates. The script is provided as a reproducible audit rather than as a new production dependency.
+`python validation/verify.py` (Python 3 standard library only; run from any directory) verifies the candidate scheme, exact leap cycle, reverse conversion, representative proleptic Gregorian range, continuous-work schedules, candidate enumeration and drift *relative to a deliberately constant nominal mean*. Its first execution in Chat's isolated container yielded **531,297 counted checks passing** (including complete text-notation round trips and 50/50 near-epoch UTC equinox civil-date matches). This is not a run on the owner's GMKtec and not a prediction of observed equinox dates. The script is provided as a reproducible audit rather than as a new production dependency.
 
 ## Status and boundaries
 
