@@ -1,3 +1,5 @@
+> **Historical v1 analysis — superseded under the later base-ten requirement.** The revised, currently preferred *research* model is [v2 DC10](../v2-base10-2026-10-20/README.md). This historical analysis remains informative but its ordinal-only conclusion does not meet the new nontrivial decimal-year division constraint. Neither research candidate is the production calendar.
+
 # Metric Calendar — independent first-principles investigation (v1, 20 October 2026)
 
 **Research recommendation only.** This review was undertaken independently of the existing public calendar's ten-month design. Its proposed **Ordinal Solar Calendar OSC1** is *not* adopted in `calendar.js` or the live website. The production Metric Calendar's Gregorian-aligned dates and converter remain unchanged.
