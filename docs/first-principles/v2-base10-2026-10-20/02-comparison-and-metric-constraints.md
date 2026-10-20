@@ -7,7 +7,7 @@ The test is **not** “which calendar happens to have a ten somewhere”. A base
 | Structure | Genuine decimal feature | Ordinary-day structure | Leap-year difference | Why not first |
 |---|---|---|---|---|
 | **DC10 (preferred)** | 10 near-equal decimal annual periods; optional 10%, 1%, 0.1% progress | **5×36+5×37**; five equal 73-day pairs | A central 36-day period becomes 37; six37/four36; no month >37 | Smallest compelling decimal annual hierarchy, all dates ordinary, continuous weekday overlays possible |
-| Original Metric Calendar | 10 months, 360 six-week regular core | 10×(6×6)+5 | One last month reaches 38 (6 off-week days in total) | Makes nondecimal six-day week mandatory, puts five common dates outside that week and adds a bigger leap month |
+| Original Metric Calendar | 10 months, 360 six-week regular core | 10×(6×6)+5 | One last month reaches 38 (6 off-week days in total) | Makes a nondecimal six-day week mandatory, puts five common dates outside that week, increases month length to 38 in leap years, and reaches **1.4-day** worst leap decimal-boundary error versus DC10's **0.4 day** |
 | 10 alternating 37/36 months; leap in final short month | Ten periods equal-as-possible | 37,36 repeating | Final 36→37 | Simpler end-of-year intercalation, but worst leap boundary rounding error **0.8 day**, versus DC10's **0.4** |
 | Ten equal conceptual deciyears | Exactly 1/10 of an ideal 365.2422-day year | Each ~36.52422 physical days | No discrete scheme specified | Calendar dates would require fractional days, contrary to invariant day length |
 | 100 near-equal blocks | 10×10, strong decimal hierarchy | 65×4 and 35×3 days | 66×4 and 34×3 days | 100 variable short blocks, much more obligatory calendrical metadata |
@@ -33,9 +33,9 @@ The old six-day 4 Focus / 2 Rest schedule remains a legitimate **optional** expe
 
 ## What is mathematically proved versus chosen?
 
-**Proven:** 365 mod 10=5 makes equal whole-day decimonths impossible; 36/37 are the only possible lengths at one-day maximum spread; 160 balanced pair/insertion designs are enumerated; exactly two minimise common/leap maximum deciyear-boundary error; the preferred leap year has exact 183/183 half-years and mirrored month lengths; all dates remain in an ordinary month.
+**Proven:** 365 mod 10=5 makes equal whole-day decimonths impossible; 36/37 are the only possible lengths at one-day maximum spread; **exact equal 73-day pairs follow necessarily from the minimax-optimal 0.5-day common-year boundary bound**; all 160 common-year optimal patterns combined with month-preserving leap insertions are enumerated; exactly two minimise common/leap maximum deciyear-boundary error; the preferred leap year has exact 183/183 half-years and mirrored month lengths; all dates remain in an ordinary month.
 
-**Assumed constraint:** exactly ten annual periods are mandatory; the tenfold division is central to the project rather than just a display option; five common-year equal pairs are valuable for structural symmetry; no common month-day should disappear in leap years.
+**Assumed constraint:** exactly ten annual periods are mandatory; the tenfold division is central to the project rather than just a display option; no common month-day should disappear in leap years. **The five equal pairs are a mathematical consequence of optimal decimal boundary spacing, not a separate assumption.**
 
 **Judgement:** choosing the A mirror because the extra day occurs at the midpoint, not the B mirror because its placement alters the start positions of fewer later months. Both are equally optimal on the stated minimax criterion. The selection is not an objective theorem about user preferences.
 

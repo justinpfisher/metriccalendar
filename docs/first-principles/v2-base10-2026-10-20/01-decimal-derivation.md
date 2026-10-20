@@ -18,7 +18,9 @@ For a 366-day leap year, the same optimal range requires:
 
 An **entirely uniform ten-month 365-day year is impossible**, as 365 is not divisible by ten. Neither moving surplus days outside months nor inventing a clock system eliminates the astronomical mismatch; it merely changes which rule is made exceptional.
 
-Now further require (A) five equal common-year *pairs* of two months (each exactly 73 days), (B) complete month-day identity preservation during leap years, so no common-year month can shrink, and (C) no month ever exceeds 37 days. The constraints force every common pair to be **(37,36) or (36,37)** and force the leap addition to enlarge **exactly one of the five 36-day months**. There are **2^5=32** common pair arrangements and **32×5=160** valid common/leap paired designs. This is a complete finite enumeration **within explicitly stated conditions**, not a proof that every imaginable calendar was enumerated.
+**Crucial result: five 73-day pairs are not an added arbitrary constraint.** To attain the proven minimum common-year error of 0.5, every even-indexed boundary must land exactly at its ideal integer position: 20% of 365=**73**, 40%=**146**, 60%=**219**, 80%=**292**. Therefore **each consecutive pair of tenths must contain precisely 73 days**. This restores the five-pair identity as a meaningful theorem under an explicit decimal-equal-spacing criterion, rather than as an incidental numerical curiosity.
+
+Now additionally require (A) complete month-day identity preservation in leap years, so no common-year month can shrink, and (B) no month ever exceeds 37 days. The constraints force every common pair to be **(37,36) or (36,37)** and force the leap addition to enlarge **exactly one of the five 36-day months**. There are **2^5=32** common pair arrangements and **32×5=160** valid common/leap paired designs. This is a **complete enumeration of all ordinary-year minimax-optimal ten-period boundaries combined with single-month, no-shrink, no-38 leap insertions**. It is not a claim to enumerate unrelated calendar concepts with interrupted cycles or no month requirement.
 
 ## Rigorous decimal-boundary error minimisation
 
@@ -28,7 +30,7 @@ For any ten consecutive period lengths p1...p10 totalling N, define cumulative b
 
 For **N=365**, the ideal at odd k ends with 0.5. Therefore *any* integer boundary scheme must have E≥**0.5 day**. For **N=366**, at k=1 the ideal is 36.6 days, so E≥**0.4 day**. These are rigorous lower bounds independent of candidate choice.
 
-The exhaustive 160-case search finds **exactly two designs** attaining both theoretical minima while satisfying all of (A)–(C):
+The exhaustive 160-case search finds **exactly two designs** attaining both theoretical minima while also retaining all common-year month/day labels in leap years and keeping month lengths at most 37:
 
 | Case | Ordinary period lengths | Leap insertion | Leap period lengths |
 |---|---|---|---|
