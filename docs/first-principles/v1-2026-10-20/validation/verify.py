@@ -7,7 +7,7 @@ This validation was run in Chat's container and not on the owner's GMKtec.
 from datetime import date, timedelta
 from fractions import Fraction
 from collections import defaultdict
-import json
+import json, re
 
 TARGET = Fraction(1826211, 5000)  # 365.2422 EXACT nominal benchmark ONLY
 EPOCH = date(2000, 3, 20)
@@ -46,6 +46,25 @@ def gregorian_to_osc(g):
 
 def osc_to_gregorian(y,d):
     return EPOCH + timedelta(days=encode(y,d))
+
+# Canonical text format: reject negative zero and redundant leading zeroes.
+OSC_DATE = re.compile(r'OSC1:([+-])([0-9]{6,})-([0-9]{3})')
+
+def format_date(y, d):
+    encode(y, d)
+    return f"OSC1:{'+' if y>=0 else '-'}{abs(y):06d}-{d:03d}"
+
+def parse_date(text):
+    if not isinstance(text, str):
+        raise ValueError('OSC1 text required')
+    match = OSC_DATE.fullmatch(text)
+    if not match:
+        raise ValueError('invalid OSC1 notation')
+    y = int(match.group(2)) * (1 if match.group(1) == '+' else -1)
+    d = int(match.group(3))
+    if format_date(y, d) != text:
+        raise ValueError('non-canonical OSC1 notation')
+    return y, d
 
 def comparison():
     candidates = {
@@ -88,6 +107,8 @@ def verify():
         for ordinal in range(1,366+int(leap(year))):
             ab=encode(year,ordinal)
             assert decode(ab)==(year,ordinal)
+            assert parse_date(format_date(year,ordinal))==(year,ordinal)
+            checks+=1
             assert decode(ab+1)==(year,ordinal+1) if ordinal < 365+int(leap(year)) else decode(ab+1)==(year+1,1)
             checks+=1
     for y in samples:
@@ -114,6 +135,20 @@ def verify():
         try: encode(*fail)
         except ValueError: checks+=1
         else: raise AssertionError(fail)
+    # Independently published 2000–2049 UTC March equinox civil-day table.
+    # All are March 20 except these dates; NOT a long-horizon ephemeris.
+    equinox_march_day_exceptions = {2003:21, 2007:21, 2044:19, 2048:19}
+    for gy in range(2000, 2050):
+        expected = date(gy, 3, equinox_march_day_exceptions.get(gy, 20))
+        assert osc_to_gregorian(gy-2000, 1) == expected
+        checks+=1
+    for invalid_text in ('OSC1:-000000-001', 'OSC1:+00000-001',
+        'OSC1:+000000-000', 'OSC1:+000003-366', 'OSC1:+000000-01',
+        'OSC1:+000000-001Z', 'OSC1:+0000000-001', 'g2000-03-20',
+        'OSC1:000000-001'):
+        try: parse_date(invalid_text)
+        except ValueError: checks+=1
+        else: raise AssertionError(invalid_text)
     assert osc_to_gregorian(0,1)==date(2000,3,20)
     assert osc_to_gregorian(2,366)==date(2003,3,20)
     assert osc_to_gregorian(3,365)==date(2004,3,19)
@@ -121,6 +156,7 @@ def verify():
     assert sum(int(leap(y)) for y in range(10000)) == 2422
     print('PASS', checks,'roundtrips/boundary checks; century, negative-year, and UTC epoch examples')
     print('Sources: exact nominal 365.2422 reference; no astronomical ephemeris simulation')
+    print('Astronomy: 50 of 50 UTC civil March equinox dates (2000–2049) match published event table; no time-of-day phase validation')
     print('Epoch examples:')
     for g in [date(2000,3,20),date(2004,3,19),date(2004,3,20),date(2026,10,19),date(2100,3,20)]:print(g,gregorian_to_osc(g))
     print('Leap comparison:')

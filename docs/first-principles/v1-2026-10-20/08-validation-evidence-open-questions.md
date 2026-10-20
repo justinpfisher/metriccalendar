@@ -21,9 +21,11 @@ Run from the `docs/first-principles/v1-2026-10-20` directory. The standalone scr
 - centurial examples, early and negative OSC1 years, invalid ordinals and phase-cycle invariants;
 - 10,000 successive simulated leap decisions (2,422 leap years) and exact rational year comparisons;
 - exhaustive *bounded* candidate enumeration (w=2..12, periods p=2..20, weeks q=1..100, ordinary off-core days 0..5);
+- complete canonical signed date-notation parse/format round trips and rejection of negative-zero and redundant-leading-zero duplicates;
+- **50 of 50 UTC March-equinox event *civil dates* match 2000–2049** using [this published table](https://www.timeanddate.com/calendar/seasons.html?n=1440&year=2000). Four dates depart from 20 March: 2003/2007 on 21 March and 2044/2048 on 19 March. This is a secondary-source 50-year check, not ephemeris, time-of-day, or millennial validation;
 - all phases of continuous 5/2-over-7, 4/3-over-7, 4/2-over-6, 3/2-over-5 and 4/1-over-5 activity patterns.
 
-**Recorded Chat-container result:** **344,234 counted assertions/check-steps passed**. 81 nested triples enumerated (69 core360, 3 core363, 9 core364). Leap cycle exactly 31/128. Physical working-day counts agree with document 6. This is **not** evidence of running on the owner's GMKtec PC, an independent ephemeris simulation, GitHub CI, Pages deployment, security review or human-subject research. The count combines step checks rather than meaning 344,234 independent research results.
+**Recorded Chat-container result:** **531,297 counted assertions/check-steps passed**. 81 nested triples enumerated (69 core360, 3 core363, 9 core364). Leap cycle exactly 31/128. Physical working-day counts agree with document 6. This is **not** evidence of running on the owner's GMKtec PC, an independent ephemeris simulation, GitHub CI, Pages deployment, security review or human-subject research. The count combines step checks rather than meaning 344,234 independent research results.
 
 Because `datetime.date` is limited to Gregorian years 1–9999, the full-integer OSC1 algorithm is more general than the Python Gregorian adapter. A separate precise proleptic Gregorian date converter would be needed for astronomical BCE dates or years greater than 9999.
 
@@ -77,5 +79,7 @@ Because `datetime.date` is limited to Gregorian years 1–9999, the full-integer
 3. Converter migration contract and forward/reverse cross-version tests.
 4. Explicit owner decision to change the canonical calendar — **not granted merely by commissioning this research**.
 5. On an authorised later change, use GMKtec local development/tests where reachable; preserve free independent public GitHub Actions and GitHub Pages security/release checks; verify live production after any deployment.
+
+**Finite astronomical check caveat:** A 20 March fixed-date rule would match 46/50 of those civil equinox dates, versus 50/50 for OSC1, but other phase-adjusted calendars might perform equally on that short sample. A day-level match is not proof that the instant of the equinox is near the civil-day boundary or that seasonal alignment persists over centuries.
 
 The strongest available present conclusion is a defensible **foundational** mathematical recommendation, not empirical proof of a new universal civil calendar or human work schedule.
