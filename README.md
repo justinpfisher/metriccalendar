@@ -142,3 +142,7 @@ After local checks and visual review, commit the source and generated files and
 push to `main`. Verify the Pages build belongs to the new commit, then check the
 live HTML, assets, sitemap, 404 response, and converter. A browser test run can
 target production with `BASE_URL=https://metriccalendar.org`.
+
+## First-principles mathematical research (not adopted)
+
+The [research history and current base-ten redesign recommendation](docs/first-principles/README.md) is separate from this repository's **current live Metric Calendar specification**. The newest DC10 research model has ten balanced annual periods, but no production date rules, converter APIs, domain or calendar names have changed. The earlier ordinal-only recommendation is retained for comparison and marked superseded under the later base-ten requirement.
