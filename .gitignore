@@ -1,2 +1,6 @@
 node_modules/
 .qa/
+
+# Research validation uses Python; keep local runs from dirtying the checkout.
+__pycache__/
+*.py[cod]
