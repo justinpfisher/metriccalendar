@@ -1,3 +1,5 @@
+> **Historical v2 research snapshot — weekly layer superseded 21 October 2026.** The current owner-selected research design is [v3: six-day weeks, four Focus Days, two Rest Days, and a Bonus Rest Day in each 37-day month](../v3-six-day-week-2026-10-21/README.md). This v2 analysis remains authoritative for the mathematical derivation of the ten balanced month lengths and central leap day. No public date converter has been changed.
+
 # Metric Calendar — base-ten first-principles revision (research v2, 20 October 2026)
 
 ## Current research recommendation: decimal solar calendar DC10
