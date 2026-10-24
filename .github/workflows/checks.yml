@@ -17,6 +17,8 @@ jobs:
         run: node --test tests/calendar.test.cjs
       - name: Verify isolated DC10 research engine
         run: node --test tests/dc10.test.cjs
+      - name: Check research preview JavaScript syntax
+        run: node --check dc10.js && node --check dc10-preview.js
       - name: Verify selected six-day research calendar
         run: python3 docs/first-principles/v3-six-day-week-2026-10-21/validation/verify.py
       - name: Verify finite-window equinox phase alignment
