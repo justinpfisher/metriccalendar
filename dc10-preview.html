@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>DC10 v3 Research Preview | Metric Calendar</title>
+  <meta name="description" content="Explore the provisional ten-month, six-day-week DC10 research calendar beside Gregorian dates. Not the adopted Metric Calendar converter.">
+  <meta name="theme-color" content="#0B1D3A">
+  <link rel="icon" href="/assets/favicons/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="/styles.css?v=5">
+  <script defer src="/dc10.js?v=1"></script>
+  <script defer src="/dc10-preview.js?v=1"></script>
+  <style>
+    .research-page { max-width: 1000px; margin: 0 auto; padding: 1.5rem max(1rem, 3vw) 5rem; }
+    .research-page a { text-underline-offset: 0.2em; }
+    .research-top { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; justify-content:space-between; margin-bottom:2.5rem; }
+    .research-top strong { font-size:1.25rem; letter-spacing:0.015em; }
+    .research-top nav {display:flex;flex-wrap:wrap;gap:1rem;}
+    .research-hero {max-width:760px; margin-bottom:2.5rem;}
+    .research-hero h1 {font-size:clamp(2rem,5vw,3.4rem);line-height:1.12; margin:0.4em 0;}
+    .research-eyebrow {font-size:0.8rem;text-transform:uppercase;letter-spacing:0.13em;font-weight:700;}
+    .research-lead {font-size:1.15rem;line-height:1.6;}
+    .research-warning {border:2px solid currentColor;border-radius:0.8rem;padding:1rem 1.2rem;margin:1.5rem 0 2.5rem;}
+    .research-warning strong {display:block;margin-bottom:0.4rem;}
+    .research-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;}
+    .research-panel {border:1px solid #9aa3b0;border-radius:0.8rem;padding:1.5rem;min-width:0;}
+    .research-panel h2 {font-size:1.4rem;margin:0 0 0.65rem;}
+    .research-panel label {display:block;font-weight:700;margin:1.1rem 0 0.35rem;}
+    .research-panel input {font:inherit;max-width:100%;width:100%;border:2px solid #727d90;border-radius:0.35rem;padding:0.65rem;color:#0b1d3a;background:white;}
+    .research-panel button {margin-top:0.85rem;padding:0.7rem 1.1rem;border:2px solid #0b1d3a;background:#0b1d3a;color:white;border-radius:0.4rem;font:inherit;font-weight:700;cursor:pointer;}
+    .research-panel button:hover,.research-panel button:focus-visible {background:#24476f;}
+    .research-result {overflow-wrap:anywhere;min-height:3.6rem;padding:0.9rem 0;border-top:1px solid #9aa3b0;margin-top:1rem;line-height:1.5;}
+    .research-result.error {font-weight:700;color:#a11212;}
+    .research-notes {margin-top:2.5rem;}
+    .research-notes h2 {font-size:1.65rem;margin-bottom:0.7rem;}
+    .research-notes table {width:100%;border-collapse:collapse;margin:1rem 0;max-width:740px;}
+    .research-notes th,.research-notes td {border:1px solid #a7acb5;padding:0.7rem;text-align:left;}
+    .research-notes p,.research-notes li {line-height:1.65;}
+    .research-footer {margin-top:3rem;padding-top:1.4rem;border-top:1px solid #9aa3b0;}
+    @media (max-width:700px) {.research-grid {grid-template-columns:1fr;} .research-panel{padding:1rem;}}
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<main class="research-page" id="main">
+  <header class="research-top">
+    <strong>Metric Calendar · Research</strong>
+    <nav aria-label="Related pages">
+      <a href="/">Home</a>
+      <a href="/converter.html">Current converter</a>
+      <a href="https://github.com/justinpfisher/metriccalendar/tree/main/docs/first-principles/v3-six-day-week-2026-10-21">Research evidence</a>
+    </nav>
+  </header>
+  <section class="research-hero" aria-labelledby="preview-heading">
+    <p class="research-eyebrow">DC10 · Version 3 · Experimental</p>
+    <h1 id="preview-heading">Ten months. Six-day weeks. A different year.</h1>
+    <p class="research-lead">Try the mathematically balanced research calendar: ten months of 36 or 37 days, each with six regular weeks, four Focus Days and two Rest Days. Every long month ends with an additional Rest Day.</p>
+  </section>
+  <aside class="research-warning" aria-label="Research status">
+    <strong>Research preview — not the current Metric Calendar.</strong>
+    The DC10 dates shown here use an unadopted March-based year boundary and provisional astronomical formula. Their years and month/day identifiers do not mean the same thing as the dates in the <a href="/converter.html">current public converter</a>. Always retain the Gregorian date for real appointments, records and deadlines.
+  </aside>
+  <div class="research-grid">
+    <section class="research-panel" aria-labelledby="gregorian-title">
+      <h2 id="gregorian-title">Gregorian to DC10</h2>
+      <p>Convert a conventional date into the research system.</p>
+      <form id="gregorian-form">
+        <label for="gregorian-date">Gregorian date (gYYYY-MM-DD)</label>
+        <input id="gregorian-date" type="text" value="g2026-10-24" spellcheck="false" autocomplete="off" required>
+        <button type="submit">Convert to DC10</button>
+      </form>
+      <p class="research-result" id="gregorian-result" role="status" aria-live="polite">Enable JavaScript to convert this date.</p>
+    </section>
+    <section class="research-panel" aria-labelledby="decimal-title">
+      <h2 id="decimal-title">DC10 to Gregorian</h2>
+      <p>Check the conventional date behind an experimental DC10 label.</p>
+      <form id="dc10-form">
+        <label for="dc10-date">DC10 date (signed year)</label>
+        <input id="dc10-date" type="text" value="DC10:+000026-06-37" spellcheck="false" autocomplete="off" required>
+        <button type="submit">Convert to Gregorian</button>
+      </form>
+      <p class="research-result" id="dc10-result" role="status" aria-live="polite">Enter a DC10 research date and choose Convert.</p>
+    </section>
+  </div>
+  <noscript><p>JavaScript is required for interactive conversion. The mathematical explanation below is available without it.</p></noscript>
+  <section class="research-notes" aria-labelledby="structure-title">
+    <h2 id="structure-title">The proposed structure</h2>
+    <p>Each month has six complete six-day weeks. The weekday names are <strong>Begin, Create, Connect, Share, Pause, Renew</strong>; days 1–4 are Focus Days and days 5–6 are Rest Days. A month with Day 37 adds a Bonus Rest Day <em>outside</em> the regular weekly positions.</p>
+    <table>
+      <caption>Days per month in the research calendar</caption>
+      <thead><tr><th scope="col">Year type</th><th scope="col">Month lengths, 01–10</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Common (365 days)</th><td>37, 36, 37, 36, 36, 37, 36, 37, 36, 37</td></tr>
+        <tr><th scope="row">Leap (366 days)</th><td>37, 36, 37, 36, 37, 37, 36, 37, 36, 37</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Annual arithmetic:</strong> 60 full weeks, 240 Focus Days, 120 regular Rest Days and five or six additional Rest Days. The leap addition is Month 05 Day 37, counted once. Month 10 always ends at Day 37.</p>
+    <h2>Why this is not yet the adopted calendar</h2>
+    <p>The provisional year-start rule is 31 leap years in 128, anchored to 20 March 2000 UTC. A check against published equinox dates for 2000–2099 found a mismatch in 2073; longer-range astronomical testing remains unfinished. The six-day Focus/Rest classification is a chosen calendar convention, not a scientifically proven schedule for maximum happiness or productivity.</p>
+    <p>Clocks, time zones, physical day lengths, Gregorian legal dates and the <a href="/calendar.html">current published specification</a> remain unchanged. See the <a href="https://github.com/justinpfisher/metriccalendar/blob/main/docs/first-principles/v3-six-day-week-2026-10-21/03-equinox-phase-and-decimal-time.md">astronomy and optional decimal-time investigation</a>.</p>
+  </section>
+  <footer class="research-footer"><p>Experimental DC10 v3 exploration · J. Fisher / MetricCalendar.org. <a href="https://github.com/justinpfisher/metriccalendar/blob/main/dc10.js">Review the arithmetic in source code</a>.</p></footer>
+</main>
+</body>
+</html>
