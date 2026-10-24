@@ -32,6 +32,8 @@ The mathematics of the ten-month structure remains [v2](../v2-base10-2026-10-20/
 
 The mathematical six-day-week classification and transition rules were independently checked for **187,004 individual dates across 512 signed years** in Chat's container. The v3 checked-in script additionally calls the existing v2 full date-conversion/regression verifier; the exact checked-in script is required to pass the repository's isolated public GitHub CI. These tests are **not GMKtec-local execution**, nor evidence of improved health or employee output.
 
+**Experimental public preview:** [Open the DC10 v3 side-by-side converter](https://metriccalendar.org/dc10-preview.html). This separate noindex preview uses the research namespace and provisional year-start formula; it is **not** the canonical website converter. No legacy date behaviour changes.
+
 **New research implementation (24 October 2026):** A separate [JavaScript DC10 date engine](../../../dc10.js) with [independent Node test suite](../../../tests/dc10.test.cjs) now implements signed-year date identity, the unchanged provisional phase-40 year start, strict namespaced canonical parsing, Gregorian civil-date conversion over years 1–9999, and month-local Focus/Rest classification. The original production `calendar.js` remains unchanged; this is an implementation reference, not a live converter switch or an adopted astronomical boundary. Tests run as part of public-repository CI.
 
 ## Production and history boundaries
