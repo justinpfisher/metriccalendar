@@ -28,6 +28,7 @@ The mathematics of the ten-month structure remains [v2](../v2-base10-2026-10-20/
 - [Detailed candidate rules and month/week/day classification](01-six-day-week-specification.md)
 - [Mathematical trade-offs, rest pattern and work-time limits](02-rationale-and-human-rhythm.md)
 - [Runnable research validation](validation/verify.py) (Python 3, standard library; imports the unchanged v2 arithmetic verifier)
+- [100-year equinox phase stress test and optional decimal time](03-equinox-phase-and-decimal-time.md), with [independent finite-window regression](validation/verify_phase.py)
 
 The mathematical six-day-week classification and transition rules were independently checked for **187,004 individual dates across 512 signed years** in Chat's container. The v3 checked-in script additionally calls the existing v2 full date-conversion/regression verifier; the exact checked-in script is required to pass the repository's isolated public GitHub CI. These tests are **not GMKtec-local execution**, nor evidence of improved health or employee output.
 
