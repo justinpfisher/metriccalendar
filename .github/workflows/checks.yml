@@ -15,6 +15,8 @@ jobs:
           node-version: '22'
       - name: Calendar calculations
         run: node --test tests/calendar.test.cjs
+      - name: Verify isolated DC10 research engine
+        run: node --test tests/dc10.test.cjs
       - name: Verify selected six-day research calendar
         run: python3 docs/first-principles/v3-six-day-week-2026-10-21/validation/verify.py
       - name: Verify finite-window equinox phase alignment
