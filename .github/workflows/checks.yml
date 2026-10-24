@@ -17,6 +17,8 @@ jobs:
         run: node --test tests/calendar.test.cjs
       - name: Verify selected six-day research calendar
         run: python3 docs/first-principles/v3-six-day-week-2026-10-21/validation/verify.py
+      - name: Verify finite-window equinox phase alignment
+        run: python3 docs/first-principles/v3-six-day-week-2026-10-21/validation/verify_phase.py
       - name: Rebuild static pages
         run: node scripts/build.mjs
       - name: Check links, metadata, sitemap, and hosting files
